@@ -61,3 +61,51 @@
 .bannerImg{
     width: 100%;
 }
+.banner {
+    position: relative;
+    height: 95vh; /* Adjust this as needed */
+  }
+  
+  .bannerImgWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .bannerImg {
+    object-fit: cover;
+  }
+  /* Responsive adjustments */
+@media (max-width: 1024px) {
+    .header {
+      flex-direction: column;
+    }
+    .details, .banner {
+      width: 100%; /* Full width on smaller screens */
+      height: auto;
+    }
+    .banner {
+      height: 60vh; /* Reduce height for medium screens */
+    }
+    .comments {
+      grid-template-columns: 1fr; /* Stack comments vertically */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 10px;
+    }
+    .banner {
+      height: 50vh; /* Further reduce height for smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .banner {
+      height: 40vh; /* Even smaller height for mobile screens */
+    }
+    .contentContainer {
+      margin: 5% auto;
+    }
+  }
