@@ -1,0 +1,52 @@
+.card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 2px 10px rgba(3, 3, 3, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    align-items: baseline;
+  }
+  
+  .heading {
+    margin-bottom: 10px;
+  }
+  
+  .info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  
+  .details {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Mobile devices (portrait and landscape) */
+  @media only screen and (max-width: 768px) {
+    .card{
+      padding: 15px;
+    }
+  
+    .details {
+      font-size: 20px;
+    }
+  }
+  
+  /* Tablet devices (landscape) */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .card {
+      padding: 15px;
+    }
+  
+    .details {
+      font-size: 22px;
+    }
+  }
+  

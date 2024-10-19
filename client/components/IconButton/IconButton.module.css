@@ -1,0 +1,25 @@
+.Button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7vh;
+    height: 7vh;
+    border: 0;
+    box-sizing: border-box;
+    border-radius: 24px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+    color: #6c6c6c;
+    background-color: #ffffff;
+    outline: none;
+    margin: auto;
+  }
+  
+  .Icon {
+    color: rgb(91, 188, 247);
+    fill: rgb(91, 188, 247);
+    width: 26px;
+    height: 26px;
+    font-size: 26px;
+  }
+  

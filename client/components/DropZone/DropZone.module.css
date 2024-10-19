@@ -1,0 +1,68 @@
+.dropzone{
+    cursor: pointer;
+    display: flex;
+    height: 20vh;
+    text-align: center;
+    border: 2px dashed rgba(128, 128, 128, 0.519);
+    border-radius: 15px;
+    flex-direction: column;
+    justify-content: center;
+}
+.listParent{
+    list-style:none;
+    width: 40%;
+    text-align: center;
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;
+}
+.errorParent{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.errorItems{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    
+}
+.rejectedContainer{
+    width: 40%;
+}
+.errorList{
+    color: red;
+}
+.listItem,.errorItems{
+    position: relative;
+}
+.btnRemoveRejected,.btnRemove{
+    position: absolute;
+    background: rgb(245, 67, 103);
+    color: white;
+    border: 2px solid crimson;
+    transition:ease-in-out 0.2s;
+    height: 5vh; 
+    border-radius: 50%; 
+    z-index: 10;
+    right: 30px; 
+    top: -15px; 
+}
+.upload{
+    position: relative;
+    z-index: 10;
+}
+.btnRemove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btnRemove:hover, .btnRemoveRejected:hover{
+    background-color: white;
+    color: crimson;
+}

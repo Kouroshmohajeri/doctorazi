@@ -1,0 +1,7 @@
+.speedDialmy{
+    position: fixed;
+    right: 1%;
+    bottom: 2%;
+    width: fit-content;
+    z-index: 99;
+}

@@ -1,0 +1,17 @@
+.skelton{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.skelton span{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.lastCheck{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+}

@@ -1,0 +1,12 @@
+.container{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+.times{
+    align-items: center;
+    height: 33vh;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}

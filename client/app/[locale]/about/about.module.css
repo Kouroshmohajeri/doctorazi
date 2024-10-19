@@ -1,0 +1,14 @@
+.aboutUs{
+    display: flex;
+    flex-direction: column;
+    margin: 10% auto;
+    margin-top: -8%;
+    text-align: center;
+    height: 100vh;
+    justify-content: space-evenly;
+}
+.aboutUs p{
+
+    margin: -10% auto;
+    width: 50%;
+}

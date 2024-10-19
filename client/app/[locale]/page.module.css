@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "Nunito";
+    src: url("../../public/fonts/nunito/Nunito-Medium.ttf");
+}
+.body{
+    font-family: 'Nunito';
+    font-size: 17px;
+}

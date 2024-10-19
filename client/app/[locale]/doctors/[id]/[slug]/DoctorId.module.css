@@ -1,0 +1,83 @@
+.profile {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+}
+.info, .desc {
+    position: relative;
+    top: -5%;
+    left: -17%;
+    height: 55vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.info {
+    top: -5%;
+    left: -17%;
+    justify-content: space-evenly;
+}
+.desc {
+    top: -14%;
+    left: -51%;
+    justify-content: center;
+}
+.rating {
+    text-align: center;
+}
+.facilitiesContainer {
+    width: 90%;
+    margin: -5% auto 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.hr{
+    width: 50%;
+    margin: -6% auto 10%;
+}
+.hrComment{
+    width: 50%;
+    margin: 6% auto 0;
+}
+.notFound{
+    text-align: center;
+    margin: 25% auto;
+}
+.comments{
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.userComments {
+    height: 55vh;
+    overflow: scroll;
+}
+.facilities {
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    justify-items: center; /* Center items horizontally */
+    justify-content: center; /* Center the entire grid container */
+}
+
+.facilityPaper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    width: 90%;
+    margin: 0.5rem;
+    gap: 1rem;
+}
+
+

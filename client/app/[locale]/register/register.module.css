@@ -1,0 +1,42 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+    min-height: 75vh;
+    max-height: 100vh;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+    margin: 14% auto 10%;
+    width: 130vh; /* Adjust based on your preference */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px -2px rgba(0,0,0,0.75);
+}
+  
+.formSection {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.signupPrompt {
+    margin: 16px 0;
+}
+  
+.imageSide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+  
+  /* Adjust the .field and .fieldWrapper CSS rules if they are not directly imported from the Forms component */
+  

@@ -1,0 +1,10 @@
+.links{
+    text-decoration: none;
+    color: white;
+}
+.children{
+    margin: auto;
+}
+.drawer{
+    width: fit-content;
+}

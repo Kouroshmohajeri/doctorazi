@@ -1,0 +1,94 @@
+.container{
+    margin: 3% auto;
+}
+.searchbar{
+    padding: 1vh;
+    border: 1px solid whitesmoke;
+    
+    width: 20%;
+    margin: auto;
+}
+.label{
+    font-size: 20px;
+    margin-left: 7vh;
+    margin-right: 7vh;
+}
+.form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+.bar{
+    height: 4vh;
+    border: none;
+    width: 100%;
+}
+.bar:focus {
+    border-color: #aaa; /* or any color you prefer */
+    box-shadow: none; /* removes the blue border */
+}
+.icon{
+    cursor: pointer;
+}
+.searchbar{
+    box-shadow: 0px 1px 3px -2px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 1px 3px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 3px -2px rgba(0, 0, 0, 0.75);
+    border-radius: 25px;
+}
+.links{
+    color: unset;
+    text-decoration: none;
+}
+.doctorsList{
+    margin: auto;
+    padding: 1%;
+    width: 96%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .searchbar {
+        width: 40%;
+        margin: 10% auto;
+    }
+    .doctorsList {
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+        margin-bottom: 10%;
+    }
+
+    .label{
+        text-align: center;
+        margin: 2% auto;
+        width: 100%;
+
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .searchbar {
+        width: 80%;
+        margin: 10% auto;
+    }
+    .doctorsList {
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+        margin-bottom: 10%;
+    }
+    .label{
+        text-align: center;
+        margin: 2% auto;
+        width: 100%;
+
+    }
+}

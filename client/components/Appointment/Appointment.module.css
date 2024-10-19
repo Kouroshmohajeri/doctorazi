@@ -1,0 +1,9 @@
+.appointment {
+    margin: 10% auto;
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}

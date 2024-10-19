@@ -1,0 +1,125 @@
+.SpecialitiesContainer{
+    margin: 3% auto;
+    margin-top: 7vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-bottom: 5px;
+}
+.label{
+    margin-left: 5vh;
+    margin-bottom: 2%;
+}
+.Specialities{
+    position: relative;
+    height: 20vw;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(103, 103, 103, 0.271); 
+    z-index: 1; 
+}
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 24px; 
+    font-weight: bold; 
+    z-index: 2; 
+  }
+.cardFa, .cardEn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.cardEn{
+    margin-left: -9%;
+}
+.cardFa{
+    margin-left: 9%;
+}
+.browse {
+    position: relative;
+    width: 70vw;
+    height: 20vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    padding: 20px;
+    overflow: hidden;
+    
+}
+
+.browse p {
+    margin: 0;
+    color: white; 
+}
+
+.browse button {
+    box-sizing: border-box;
+    width: 30vh;
+    height: 8vh;
+    margin-top: 25px;
+    border-radius: 15px;
+    background-color: #fff;
+    color: rgb(91, 188, 247);
+    border: none;
+}
+
+.guide{
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: #fff; 
+    padding: 5px;
+}
+@media only screen and (max-width: 768px) {
+    .card{
+        margin-left: 0;
+    }
+    .cardEn,.cardFa{
+        margin: 0;
+    }
+    .Specialities{
+        height: 40vh;
+        margin-bottom: 5%;
+    }
+    .browse{
+        width: 100%;
+        height: 30vh;
+    }
+    .browse button {
+        font-size: 16px;
+        padding-top: -2%;
+      }
+    .guide{
+        padding: 14px;
+    }
+    .text{
+        font-size: 20px;
+    }
+    
+}
+
+/* Tablet devices (landscape) */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    
+}

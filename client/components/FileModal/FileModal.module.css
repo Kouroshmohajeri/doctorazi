@@ -1,0 +1,32 @@
+.listContainer{
+    display: grid;
+    height: 45vh;
+    overflow: scroll;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    text-align: center;
+    padding-top: 5%;
+}
+.listItem{
+    position: relative;
+    cursor: pointer;
+    list-style: none;
+}
+.btnDelete{
+    border: 2px solid rgb(245, 67, 103);
+    background: rgb(245, 67, 103);
+    color: white;
+    position: absolute;
+    top: -3%;
+    right: 12%;
+    height: 5vh;
+    border-radius: 50%;
+    z-index: 10;
+    transition: ease-in-out 0.2s;
+}
+.btnDelete:hover{
+    background-color: white;
+    color: rgb(245, 67, 103);
+}

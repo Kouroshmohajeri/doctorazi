@@ -1,0 +1,23 @@
+.dashboard{
+    margin-top: 1%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 0px;
+}
+/* For tablets and smaller screens */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: auto !important;
+        padding-top: 3%;
+    }
+}
+
+/* For larger screens */
+@media (min-width: 1024px) {
+    .dashboard {
+        grid-template-columns: auto !important;
+        padding-top: 3%;
+    }
+}

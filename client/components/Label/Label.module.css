@@ -1,0 +1,26 @@
+.labelFa, .labelEn{
+    font-size: 20px;
+    margin-bottom: 4vh;
+}
+.labelEn{
+    margin-left: 7vh;
+}
+.labelFa{
+    margin-right: 7vh;
+}
+/* Mobile devices (portrait and landscape) */
+@media only screen and (max-width: 768px) {
+    .labelEn{
+        margin-left: 0;
+        text-align: center;
+    }
+    .labelFa{
+        text-align: center;
+        margin-right: 0%;
+    }
+}
+
+/* Tablet devices (landscape) */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    
+}

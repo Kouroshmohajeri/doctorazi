@@ -1,0 +1,39 @@
+.paper{
+    width: 96%;
+    margin: 3% auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+}
+.links{
+    text-decoration: none;
+    color: unset;
+}
+.recentPosts{
+
+    width: 96vw;
+    margin: auto;
+    margin-bottom: 3%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+/* Mobile devices (portrait and landscape) */
+@media only screen and (max-width: 768px) {
+    .paper{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+    }
+}
+
+/* Tablet devices (landscape) */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    
+}
