@@ -1,4 +1,4 @@
-import Facility from '../models/Facility.js';
+import Facility from "../models/Facility.js";
 
 class FacilityRepository {
   async addFacility(doctor_id, name, position) {
@@ -6,7 +6,7 @@ class FacilityRepository {
       const facility = await Facility.create({ doctor_id, name, position });
       return facility;
     } catch (error) {
-      throw new Error('Error creating facility: ' + error.message);
+      throw new Error("Error creating facility: " + error.message);
     }
   }
 
@@ -21,7 +21,7 @@ class FacilityRepository {
       }
       return null;
     } catch (error) {
-      throw new Error('Error updating facility: ' + error.message);
+      throw new Error("Error updating facility: " + error.message);
     }
   }
 
@@ -32,7 +32,7 @@ class FacilityRepository {
       });
       return deleted;
     } catch (error) {
-      throw new Error('Error deleting facility: ' + error.message);
+      throw new Error("Error deleting facility: " + error.message);
     }
   }
 
@@ -41,7 +41,7 @@ class FacilityRepository {
       const facilities = await Facility.findAll();
       return facilities;
     } catch (error) {
-      throw new Error('Error getting all facilities: ' + error.message);
+      throw new Error("Error getting all facilities: " + error.message);
     }
   }
 
@@ -50,16 +50,20 @@ class FacilityRepository {
       const facility = await Facility.findByPk(facility_id);
       return facility;
     } catch (error) {
-      throw new Error('Error getting facility by ID: ' + error.message);
+      throw new Error("Error getting facility by ID: " + error.message);
     }
   }
 
   async getByDoctorId(doctorId) {
     try {
-      const facilities = await Facility.findAll({ where: { doctor_id: doctorId } });
+      const facilities = await Facility.findAll({
+        where: { doctor_id: doctorId },
+      });
       return facilities;
     } catch (error) {
-      throw new Error('Error getting facilities by doctor ID: ' + error.message);
+      throw new Error(
+        "Error getting facilities by doctor ID: " + error.message
+      );
     }
   }
 }
