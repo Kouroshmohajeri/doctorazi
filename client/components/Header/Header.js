@@ -47,7 +47,7 @@ const Header = () => {
               <div className="col">
                 <div className={styles.headerContainer}>
                   <Link href="/" className={styles.links}>
-                    <h1 className={styles.logo}>My Doctor</h1>
+                    <h1 className={styles.logo}>Doctor Azi</h1>
                   </Link>
                   <Link href="/doctors" className={styles.links}>
                     {t("Doctors")}

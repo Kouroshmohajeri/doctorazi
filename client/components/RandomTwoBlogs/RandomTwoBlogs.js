@@ -17,7 +17,11 @@ const RandomTwoBlogs = () => {
   return (
     <div className={styles.paper}>
       {randomTwoBlogs.map((post) => (
-        <Link href={post.url} className={styles.links} key={post.post_id}>
+        <Link
+          href={`blog/${post.post_id}/${post.url}`}
+          className={styles.links}
+          key={post.post_id}
+        >
           <Paper
             title={post.title}
             desc={post.shortDescription}

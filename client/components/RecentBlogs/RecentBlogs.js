@@ -35,7 +35,10 @@ const RecentBlogs = () => {
           <div className={styles.cardContainer}>
             {blogPosts.map((post) => (
               <Card key={post.post_id} className={styles.BlogCard}>
-                <CardActionArea component={Link} href={`/blog/${post.url}`}>
+                <CardActionArea
+                  component={Link}
+                  href={`blog/${post.post_id}/${post.url}`}
+                >
                   <CardMedia
                     component="img"
                     alt={post.title}
