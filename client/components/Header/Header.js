@@ -72,7 +72,7 @@ const Header = () => {
                   <div className="row">
                     <div className="col d-flex justify-content-end">
                       <Link
-                        href={isLoggedIn ? "/dashboard/client" : "/login"}
+                        href={isLoggedIn ? "/dashboard/clients" : "/login"}
                         className={styles.links}
                       >
                         <button

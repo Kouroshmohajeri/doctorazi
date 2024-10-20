@@ -1,24 +1,50 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Autocomplete, Button, FormControl, FormHelperText, TextField, Snackbar, Alert } from '@mui/material';
-import { listSpecialities } from '@/lib/actions/speciality/actions';
-import { UserDataContext } from '@/context/UserDatasContext';
-import Dropzone from '../DropZone/Dropzone';
-import { addBiography, getBiographyByDoctorId, updateBiography } from '@/lib/actions/biography/actions';
-import { addFacility, deleteFacility, getFacilitiesByDoctorId, updateFacility } from '@/lib/actions/facility/actions';
-import PersonAvatar from '../Avatar/PersonAvatar';
-import { ClinicalRecordContext } from '@/context/ClinicalRecordContext';
-import { getProfileImageByFileName, getProfileImagesByUserId } from '@/lib/actions/profileImage/actions';
-import styles from './Biography.module.css';
-import { getDoctor, getDoctorByClientId, updateDoctor } from '@/lib/actions/doctors/actions';
-import MyModal from '../MyModal/MyModal';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Autocomplete,
+  Button,
+  FormControl,
+  FormHelperText,
+  TextField,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import { listSpecialities } from "@/lib/actions/speciality/actions";
+import { UserDataContext } from "@/context/UserDatasContext";
+import Dropzone from "../DropZone/Dropzone";
+import {
+  addBiography,
+  getBiographyByDoctorId,
+  updateBiography,
+} from "@/lib/actions/biography/actions";
+import {
+  addFacility,
+  deleteFacility,
+  getFacilitiesByDoctorId,
+  updateFacility,
+} from "@/lib/actions/facility/actions";
+import PersonAvatar from "../Avatar/PersonAvatar";
+import { ClinicalRecordContext } from "@/context/ClinicalRecordContext";
+import {
+  getProfileImageByFileName,
+  getProfileImagesByUserId,
+} from "@/lib/actions/profileImage/actions";
+import styles from "./Biography.module.css";
+import {
+  getDoctor,
+  getDoctorByClientId,
+  updateDoctor,
+} from "@/lib/actions/doctors/actions";
+import MyModal from "../MyModal/MyModal";
 
 const Biography = () => {
   const [specialities, setSpecialities] = useState([]);
-  const [shortDescription, setShortDescription] = useState('');
-  const [shortDescriptionTranslated, setShortDescriptionTranslated] = useState('');
-  const [longDescription, setLongDescription] = useState('');
-  const [longDescriptionTranslated, setLongDescriptionTranslated] = useState('');
-  const [translatedName, setTranslatedName] = useState('');
+  const [shortDescription, setShortDescription] = useState("");
+  const [shortDescriptionTranslated, setShortDescriptionTranslated] =
+    useState("");
+  const [longDescription, setLongDescription] = useState("");
+  const [longDescriptionTranslated, setLongDescriptionTranslated] =
+    useState("");
+  const [translatedName, setTranslatedName] = useState("");
   const [facilities, setFacilities] = useState([]);
   const [speciality, setSpeciality] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
@@ -31,7 +57,7 @@ const Biography = () => {
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [snackBarInfo, setSnackBarInfo] = useState({
     state: "success",
-    message: ""
+    message: "",
   });
 
   useEffect(() => {
@@ -40,7 +66,7 @@ const Biography = () => {
 
   const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   useEffect(() => {
     const fetchDoctorId = async () => {
@@ -48,7 +74,7 @@ const Biography = () => {
         const doctorData = await getDoctorByClientId(users.id);
         setDoctorId(doctorData.doctorId);
       } catch (error) {
-        console.error('Error fetching doctor ID:', error.message);
+        console.error("Error fetching doctor ID:", error.message);
       }
     };
     fetchDoctorId();
@@ -61,9 +87,13 @@ const Biography = () => {
           const existingBiography = await getBiographyByDoctorId(doctorId);
           if (existingBiography) {
             setShortDescription(existingBiography.short_description);
-            setShortDescriptionTranslated(existingBiography.short_description_translated);
+            setShortDescriptionTranslated(
+              existingBiography.short_description_translated
+            );
             setLongDescription(existingBiography.long_description);
-            setLongDescriptionTranslated(existingBiography.long_description_translated);
+            setLongDescriptionTranslated(
+              existingBiography.long_description_translated
+            );
             setTranslatedName(existingBiography.translatedName);
           }
           const specialityData = await getDoctor(doctorId);
@@ -74,7 +104,7 @@ const Biography = () => {
           setFacilities(existingFacilities);
         }
       } catch (error) {
-        console.error('Error fetching data:', error.message);
+        console.error("Error fetching data:", error.message);
       }
     };
 
@@ -85,11 +115,13 @@ const Biography = () => {
     async function fetchData() {
       try {
         const allSpecialities = await listSpecialities();
-        const specialitiesWithTranslation = allSpecialities.map(speciality => ({
-          id: speciality.speciality_id,
-          original: speciality.name,
-          translated: speciality.translate
-        }));
+        const specialitiesWithTranslation = allSpecialities.map(
+          (speciality) => ({
+            id: speciality.speciality_id,
+            original: speciality.name,
+            translated: speciality.translate,
+          })
+        );
         setSpecialities(specialitiesWithTranslation);
 
         const response = await getProfileImagesByUserId(users.id);
@@ -105,7 +137,7 @@ const Biography = () => {
           }
         }
       } catch (error) {
-        console.error('Error fetching data:', error.message);
+        console.error("Error fetching data:", error.message);
       }
     }
     fetchData();
@@ -132,7 +164,7 @@ const Biography = () => {
   };
 
   const handleAddFacility = () => {
-    setFacilities([...facilities, { name: '', position: '' }]);
+    setFacilities([...facilities, { name: "", position: "" }]);
   };
 
   const handleRemoveFacility = async (index, facility) => {
@@ -165,9 +197,23 @@ const Biography = () => {
       const existingBiography = await getBiographyByDoctorId(doctorId);
       // Update or add biography
       if (existingBiography) {
-        await updateBiography(existingBiography.biography_id, shortDescription, shortDescriptionTranslated, longDescription, longDescriptionTranslated, translatedName);
+        await updateBiography(
+          existingBiography.biography_id,
+          shortDescription,
+          shortDescriptionTranslated,
+          longDescription,
+          longDescriptionTranslated,
+          translatedName
+        );
       } else {
-        await addBiography(doctorId, shortDescription, shortDescriptionTranslated, longDescription, longDescriptionTranslated, translatedName);
+        await addBiography(
+          doctorId,
+          shortDescription,
+          shortDescriptionTranslated,
+          longDescription,
+          longDescriptionTranslated,
+          translatedName
+        );
       }
 
       // Update or add facilities
@@ -175,7 +221,11 @@ const Biography = () => {
         // If facility has an ID, it exists in the database
         if (facility.facility_id) {
           // Facility exists and needs to be updated
-          await updateFacility(facility.facility_id, facility.name, facility.position);
+          await updateFacility(
+            facility.facility_id,
+            facility.name,
+            facility.position
+          );
         } else {
           // Facility is new, so add it
           await addFacility(doctorId, facility.name, facility.position);
@@ -184,15 +234,18 @@ const Biography = () => {
 
       // Update speciality
       await updateDoctor(doctorId, { speciality_id: speciality });
-      
+
       // Refresh the page and open snackbar
       setOpen(true);
-      setSnackBarInfo({ state: "success", message: "Changes made successfully" });
+      setSnackBarInfo({
+        state: "success",
+        message: "Changes made successfully",
+      });
       setRefresh(!refresh);
     } catch (error) {
       setOpen(true);
       setSnackBarInfo({ state: "error", message: "Something went wrong!" });
-      console.error('Error handling submit:', error.message);
+      console.error("Error handling submit:", error.message);
     }
   };
 
@@ -200,19 +253,32 @@ const Biography = () => {
     <div>
       <h2>Biography</h2>
       <div className={styles.profilepicture}>
-        <Dropzone folder="profileImage" prefix="pi_" parent={2} id={users.id} isProfile={true} />
+        <Dropzone
+          folder="profileImage"
+          prefix="pi_"
+          parent={2}
+          id={users.id}
+          isProfile={true}
+        />
         <PersonAvatar alt="Profile Image" image={profileImage} />
       </div>
       <form onSubmit={handleSubmit}>
-
         <FormControl fullWidth margin="normal">
           <Autocomplete
             id="speciality"
             options={specialities}
-            getOptionLabel={(option) => `${option.original} - ${option.translated}`}
+            getOptionLabel={(option) =>
+              `${option.original} - ${option.translated}`
+            }
             onChange={(event, value) => setSpeciality(value ? value.id : null)}
-            value={speciality !== null ? specialities.find(spec => spec.id === speciality) : null}
-            renderInput={(params) => <TextField {...params} label="Speciality" />}
+            value={
+              speciality !== null
+                ? specialities.find((spec) => spec.id === speciality)
+                : null
+            }
+            renderInput={(params) => (
+              <TextField {...params} label="Speciality" />
+            )}
             fullWidth
           />
         </FormControl>
@@ -228,7 +294,6 @@ const Biography = () => {
             fullWidth
           />
         </FormControl>
-
 
         <FormControl fullWidth margin="normal">
           <TextField
@@ -335,11 +400,16 @@ const Biography = () => {
           Submit
         </Button>
       </form>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ horizontal: "right", vertical: "top" }}>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+      >
         <Alert
           onClose={handleClose}
           severity={snackBarInfo.state}
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
           {snackBarInfo.message}
         </Alert>

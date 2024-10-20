@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
-import decoder from '@/lib/decode';
-import { Login } from '../auth/userState';
-import { getUserByUsername } from '../actions/users/actions';
+import { useContext, useState } from "react";
+import decoder from "@/lib/decode";
+import { Login } from "../auth/userState";
+import { getUserByUsername } from "../actions/users/actions";
 
 export function useFormSubmission(router) {
   const [loading, setLoading] = useState(false);
@@ -15,12 +15,12 @@ export function useFormSubmission(router) {
     setLoading(true);
     try {
       const endpoint = `/users/${formType.toLowerCase()}`;
-      const response = await Login(values,endpoint);
+      const response = await Login(values, endpoint);
       // const response = await API.post(endpoint,values);
       const userInfo = await decoder(response.data.encryptedPayload);
       const user = await getUserByUsername(userInfo.data.username);
-      localStorage.setItem('isLoggedIn',true);
-      localStorage.setItem('calendar',userInfo.data.user_id);
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("calendar", userInfo.data.user_id);
       setLoading(false);
       setSnackState({
         open: true,
@@ -29,20 +29,20 @@ export function useFormSubmission(router) {
       });
 
       const userRedirects = {
-        1: '/dashboard/clients',
-        2: '/dashboard/doctors',
-        3: '/dashboard/author',
-        4: '/dashboard/head-author',
-        5: '/dashboard/translator',
-        6: '/dashboard/management',
+        1: "/dashboard/clients",
+        2: "/dashboard/doctor",
+        3: "/dashboard/author",
+        4: "/dashboard/head-author",
+        5: "/dashboard/translator",
+        6: "/dashboard/management",
       };
 
-      router.push(userRedirects[user.user_type] || '/');
+      router.push(userRedirects[user.user_type] || "/");
     } catch (error) {
       setLoading(false);
       setSnackState({
         open: true,
-        message: error.response?.data.message || 'An unexpected error occurred',
+        message: error.response?.data.message || "An unexpected error occurred",
         severity: "error",
       });
     }

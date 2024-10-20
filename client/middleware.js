@@ -42,27 +42,48 @@ export const middleware = async (request) => {
   const currentPath = request.nextUrl.pathname;
 
   // Redirect logged-in users trying to access login or register page
-  // if (token && (currentPath.endsWith('/login') || currentPath.endsWith('/register'))) {
-  //     const userDashboardPath = `/${localePrefix}${userDashboardPaths[userType] || ''}`;
-  //     return NextResponse.redirect(`${request.nextUrl.origin}${userDashboardPath}`);
-  // }
-  // // Handle logout for expired tokens or no token in protected areas
-  // if ((expired||!token) && (currentPath.includes('/dashboard/') || currentPath.includes('/appointment'))) {
-  //     // Logout logic (e.g., remove cookies, call Logout API)
-  //     if (!token) {
-  //     return NextResponse.redirect(`${request.nextUrl.origin}/${localePrefix}login`);
-  //     }
-  //     return NextResponse.redirect(`${request.nextUrl.origin}/${localePrefix}logout`);
-  // }
+  if (
+    token &&
+    (currentPath.endsWith("/login") || currentPath.endsWith("/register"))
+  ) {
+    const userDashboardPath = `/${localePrefix}${
+      userDashboardPaths[userType] || ""
+    }`;
+    return NextResponse.redirect(
+      `${request.nextUrl.origin}${userDashboardPath}`
+    );
+  }
+  // Handle logout for expired tokens or no token in protected areas
+  if (
+    (expired || !token) &&
+    (currentPath.includes("/dashboard/") ||
+      currentPath.includes("/appointment"))
+  ) {
+    // Logout logic (e.g., remove cookies, call Logout API)
+    if (!token) {
+      return NextResponse.redirect(
+        `${request.nextUrl.origin}/${localePrefix}login`
+      );
+    }
+    return NextResponse.redirect(
+      `${request.nextUrl.origin}/${localePrefix}logout`
+    );
+  }
 
-  // // Other authorization logic and i18n routing
-  // if (userType) {
-  //     const userDashboardPath = `/${localePrefix}${userDashboardPaths[userType] || ''}`;
-  //     const isAccessingOtherDashboard = currentPath.startsWith(`/${localePrefix}dashboard`) && currentPath !== userDashboardPath;
-  //     if (isAccessingOtherDashboard) {
-  //     return NextResponse.redirect(`${request.nextUrl.origin}${userDashboardPath}`);
-  //     }
-  // }
+  // Other authorization logic and i18n routing
+  if (userType) {
+    const userDashboardPath = `/${localePrefix}${
+      userDashboardPaths[userType] || ""
+    }`;
+    const isAccessingOtherDashboard =
+      currentPath.startsWith(`/${localePrefix}dashboard`) &&
+      currentPath !== userDashboardPath;
+    if (isAccessingOtherDashboard) {
+      return NextResponse.redirect(
+        `${request.nextUrl.origin}${userDashboardPath}`
+      );
+    }
+  }
 
   return i18nRouter(request, i18nConfig);
 };

@@ -28,11 +28,18 @@ const Page = () => {
   const { users, fetchCookies } = useContext(UserDataContext);
   const [name, setName] = useState("");
   const [doctorsCount, setDoctorsCount] = useState(0);
+  const [cookiesFetched, setCookiesFetched] = useState(false);
 
+  // Use effect to fetch cookies once
   useEffect(() => {
-    fetchCookies();
-  }, []);
+    if (!cookiesFetched) {
+      fetchCookies();
+      setCookiesFetched(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cookiesFetched]);
 
+  // Use effect to fetch user data based on `users.id`
   useEffect(() => {
     const fetchName = async () => {
       try {
@@ -47,7 +54,7 @@ const Page = () => {
       }
     };
     fetchName();
-  }, [users.id, fetchCookies]);
+  }, [users.id]);
 
   const renderSelectedPanel = () => {
     switch (isSelected) {
@@ -92,10 +99,8 @@ const Page = () => {
         menuList={[
           { text: "Panel", icon: <WindowIcon /> },
           { text: "Appointments", icon: <EventAvailable /> },
-          // { text: "Add Appointment", icon: <AddOutlinedIcon /> },
           { text: "My Clinical Records", icon: <FolderIcon /> },
           { text: "My Prescriptions", icon: <DescriptionSharpIcon /> },
-          // { text: "My Wallet", icon: <WalletIcon /> },
           {
             text: `My ${doctorsCount > 1 ? "Doctors" : "Doctor"}`,
             icon: getDoctorIcon(doctorsCount),
