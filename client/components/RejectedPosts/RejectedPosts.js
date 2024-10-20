@@ -1,28 +1,34 @@
-import React, { useContext, useEffect, useState } from 'react';
-import CardComponent from '../Card/CardComponent';
-import { UserDataContext } from '@/context/UserDatasContext';
-import { getAuthorByUserId } from '@/lib/actions/authors/actions';
-import { deleteBlogPost, deleteFolder, getRejectedBlogPosts, getRejectedBlogPostsByAuthorId, updateRejectStatus } from '@/lib/actions/blogPost/actions';
-import styles from '../BlogsManagement/PostsManagement.module.css';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import DeleteOutlineSharpIcon from '@mui/icons-material/DeleteOutlineSharp';
-import EditSharpIcon from '@mui/icons-material/EditSharp';
-import { sideMenuContext } from '@/context/SideMenuContext';
-import { ClinicalRecordContext } from '@/context/ClinicalRecordContext';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import RemoveCircleOutlineSharpIcon from '@mui/icons-material/RemoveCircleOutlineSharp';
-import Link from 'next/link';
-import TextField from '@mui/material/TextField';
-import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineSharp';
+import React, { useContext, useEffect, useState } from "react";
+import CardComponent from "../Card/CardComponent";
+import { UserDataContext } from "@/context/UserDatasContext";
+import { getAuthorByUserId } from "@/lib/actions/authors/actions";
+import {
+  deleteBlogPost,
+  deleteFolder,
+  getRejectedBlogPosts,
+  getRejectedBlogPostsByAuthorId,
+  updateRejectStatus,
+} from "@/lib/actions/blogPost/actions";
+import styles from "../BlogsManagement/PostsManagement.module.css";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
+import EditSharpIcon from "@mui/icons-material/EditSharp";
+import { sideMenuContext } from "@/context/SideMenuContext";
+import { ClinicalRecordContext } from "@/context/ClinicalRecordContext";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import RemoveCircleOutlineSharpIcon from "@mui/icons-material/RemoveCircleOutlineSharp";
+import Link from "next/link";
+import TextField from "@mui/material/TextField";
+import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 
 export default function RejectedPosts({ heading }) {
   const { users, fetchCookies } = useContext(UserDataContext);
@@ -35,11 +41,11 @@ export default function RejectedPosts({ heading }) {
   const [postToReject, setPostToReject] = useState(null);
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const { setIsSelected } = useContext(sideMenuContext);
   const { refresh, setRefresh } = useContext(ClinicalRecordContext);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchCookies();
@@ -99,7 +105,10 @@ export default function RejectedPosts({ heading }) {
     localStorage.setItem("model", post.content);
     localStorage.setItem("altName", post.altName);
     localStorage.setItem("editMode", true);
-    localStorage.setItem("mainPicture", `http://localhost:8800/blogs/${authorId}/${post.post_id}/${post.imageUrl}`);
+    localStorage.setItem(
+      "mainPicture",
+      `http://doctorazi.com:8800/blogs/${authorId}/${post.post_id}/${post.imageUrl}`
+    );
     setIsSelected(1);
   };
 
@@ -129,12 +138,12 @@ export default function RejectedPosts({ heading }) {
       try {
         await deleteBlogPost(postToDelete.post_id);
         await deleteFolder(authorId, postToDelete.post_id);
-        setSnackbarSeverity('success');
-        setSnackbarMessage('Post deleted successfully');
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Post deleted successfully");
         setRefresh(!refresh);
       } catch (error) {
-        setSnackbarSeverity('error');
-        setSnackbarMessage('Error deleting post');
+        setSnackbarSeverity("error");
+        setSnackbarMessage("Error deleting post");
         console.log("Error deleting: ", error);
       } finally {
         setBackdropOpen(false);
@@ -149,12 +158,12 @@ export default function RejectedPosts({ heading }) {
       setBackdropOpen(true);
       try {
         await updateRejectStatus(postToReject.post_id, false, users.id);
-        setSnackbarSeverity('success');
-        setSnackbarMessage('Post retrieved successfully');
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Post retrieved successfully");
         setRefresh(!refresh);
       } catch (error) {
-        setSnackbarSeverity('error');
-        setSnackbarMessage('Error retrieving post');
+        setSnackbarSeverity("error");
+        setSnackbarMessage("Error retrieving post");
         console.log("Error retrieving: ", error);
       } finally {
         setBackdropOpen(false);
@@ -171,9 +180,10 @@ export default function RejectedPosts({ heading }) {
   const handleSearchChange = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
-    const filtered = posts.filter(post => 
-      post.title.toLowerCase().includes(query) || 
-      post.shortDescription.toLowerCase().includes(query)
+    const filtered = posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.shortDescription.toLowerCase().includes(query)
     );
     setFilteredPosts(filtered);
   };
@@ -192,10 +202,13 @@ export default function RejectedPosts({ heading }) {
       <div className={styles.posts}>
         {filteredPosts.map((post) => (
           <div key={post.post_id} className={styles.post}>
-            <Link href={`/blog/${post.post_id}/${post.url}`} className={styles.links}>
+            <Link
+              href={`/blog/${post.post_id}/${post.url}`}
+              className={styles.links}
+            >
               <CardComponent
                 title={post.title}
-                src={`http://localhost:8800/blogs/${authorId}/${post.post_id}/${post.imageUrl}`}
+                src={`http://doctorazi.com:8800/blogs/${authorId}/${post.post_id}/${post.imageUrl}`}
                 alt={post.altName}
                 desc={post.shortDescription}
               />
@@ -205,9 +218,31 @@ export default function RejectedPosts({ heading }) {
               variant="outlined"
               aria-label="Disabled button group"
             >
-              {(authorId === post.author_id) && (<Button onClick={() => { onClickPostHandler(post) }}><EditSharpIcon /></Button>)}
-              <Button onClick={() => { handleClickOpenDelete(post) }}><DeleteOutlineSharpIcon sx={{ color: "crimson" }} /></Button>
-              {(users.type===4)&&(<Button onClick={() => { handleClickOpenReject(post) }}><CheckCircleOutlineSharpIcon sx={{color:"#058c42"}}/></Button>)}
+              {authorId === post.author_id && (
+                <Button
+                  onClick={() => {
+                    onClickPostHandler(post);
+                  }}
+                >
+                  <EditSharpIcon />
+                </Button>
+              )}
+              <Button
+                onClick={() => {
+                  handleClickOpenDelete(post);
+                }}
+              >
+                <DeleteOutlineSharpIcon sx={{ color: "crimson" }} />
+              </Button>
+              {users.type === 4 && (
+                <Button
+                  onClick={() => {
+                    handleClickOpenReject(post);
+                  }}
+                >
+                  <CheckCircleOutlineSharpIcon sx={{ color: "#058c42" }} />
+                </Button>
+              )}
             </ButtonGroup>
           </div>
         ))}
@@ -221,7 +256,8 @@ export default function RejectedPosts({ heading }) {
         <DialogTitle id="alert-dialog-title">{"Delete Post"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this post? This action cannot be undone.
+            Are you sure you want to delete this post? This action cannot be
+            undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -240,7 +276,8 @@ export default function RejectedPosts({ heading }) {
         <DialogTitle id="alert-dialog-title">{"Reject Post"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to retrieve this post? You can reject it from All blogs.
+            Are you sure you want to retrieve this post? You can reject it from
+            All blogs.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -251,7 +288,7 @@ export default function RejectedPosts({ heading }) {
         </DialogActions>
       </Dialog>
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}
       >
         <CircularProgress color="inherit" />
@@ -261,7 +298,11 @@ export default function RejectedPosts({ heading }) {
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
       >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>

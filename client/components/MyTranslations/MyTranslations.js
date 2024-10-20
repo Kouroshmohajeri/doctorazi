@@ -1,33 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react';
-import CardComponent from '../Card/CardComponent';
-import { UserDataContext } from '@/context/UserDatasContext';
-import { getTranslatedBlogPostsByTranslatorId, deleteBlogPost, deleteFolder, addTranslationToBlogPost } from '@/lib/actions/blogPost/actions';
-import styles from '../BlogsManagement/PostsManagement.module.css';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import DeleteOutlineSharpIcon from '@mui/icons-material/DeleteOutlineSharp';
-import EditSharpIcon from '@mui/icons-material/EditSharp';
-import { sideMenuContext } from '@/context/SideMenuContext';
-import { ClinicalRecordContext } from '@/context/ClinicalRecordContext';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import Link from 'next/link';
-import TextField from '@mui/material/TextField';
-import { getTranslatorByUserId } from '@/lib/actions/translator/actions';
-import { translateContext } from '@/context/TranslateMode';
+import React, { useContext, useEffect, useState } from "react";
+import CardComponent from "../Card/CardComponent";
+import { UserDataContext } from "@/context/UserDatasContext";
+import {
+  getTranslatedBlogPostsByTranslatorId,
+  deleteBlogPost,
+  deleteFolder,
+  addTranslationToBlogPost,
+} from "@/lib/actions/blogPost/actions";
+import styles from "../BlogsManagement/PostsManagement.module.css";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
+import EditSharpIcon from "@mui/icons-material/EditSharp";
+import { sideMenuContext } from "@/context/SideMenuContext";
+import { ClinicalRecordContext } from "@/context/ClinicalRecordContext";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import Link from "next/link";
+import TextField from "@mui/material/TextField";
+import { getTranslatorByUserId } from "@/lib/actions/translator/actions";
+import { translateContext } from "@/context/TranslateMode";
 
 const MyTranslations = ({ heading }) => {
   const { users, fetchCookies } = useContext(UserDataContext);
   const { setIsSelected } = useContext(sideMenuContext);
   const { refresh, setRefresh } = useContext(ClinicalRecordContext);
-  const { isTranslateModeOn, setIsTranslateModeOn } = useContext(translateContext);
+  const { isTranslateModeOn, setIsTranslateModeOn } =
+    useContext(translateContext);
   const [translatorId, setTranslatorId] = useState(0);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -35,9 +41,9 @@ const MyTranslations = ({ heading }) => {
   const [postToDelete, setPostToDelete] = useState(null);
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [searchQuery, setSearchQuery] = useState("");
   const [deleteOption, setDeleteOption] = useState(null);
 
   useEffect(() => {
@@ -52,7 +58,7 @@ const MyTranslations = ({ heading }) => {
           setTranslatorId(response.translatorId);
         }
       } catch (error) {
-        console.log('Error fetching translator ID: ', error);
+        console.log("Error fetching translator ID: ", error);
       }
     };
     fetchTranslatorId();
@@ -66,7 +72,7 @@ const MyTranslations = ({ heading }) => {
         setFilteredPosts(Array.isArray(posts) ? posts : [posts]);
       }
     } catch (error) {
-      console.log('Error fetching posts:', error);
+      console.log("Error fetching posts:", error);
     }
   };
 
@@ -77,7 +83,7 @@ const MyTranslations = ({ heading }) => {
   }, [translatorId, refresh]);
 
   const onClickPostHandler = (post) => {
-    localStorage.removeItem('translatePostId');
+    localStorage.removeItem("translatePostId");
     localStorage.removeItem("translateTitle");
     localStorage.removeItem("translateShortDescription");
     localStorage.removeItem("translateContent");
@@ -86,11 +92,14 @@ const MyTranslations = ({ heading }) => {
     localStorage.removeItem("translateContentEdit");
     localStorage.removeItem("translateEditMode");
     // Setting editor for update
-    localStorage.setItem('translatePostId', post.post_id);
-    localStorage.setItem('translateTitleEdit', post.translatedTitle);
-    localStorage.setItem('translateShortDescriptionEdit', post.translatedShortDescription);
-    localStorage.setItem('translateContentEdit', post.translatedContent);
-    localStorage.setItem('translateEditMode', true);
+    localStorage.setItem("translatePostId", post.post_id);
+    localStorage.setItem("translateTitleEdit", post.translatedTitle);
+    localStorage.setItem(
+      "translateShortDescriptionEdit",
+      post.translatedShortDescription
+    );
+    localStorage.setItem("translateContentEdit", post.translatedContent);
+    localStorage.setItem("translateEditMode", true);
     setIsSelected(3);
     setIsTranslateModeOn(false);
   };
@@ -110,33 +119,33 @@ const MyTranslations = ({ heading }) => {
     if (postToDelete) {
       setBackdropOpen(true);
       try {
-          let translationData;
+        let translationData;
         if (allowOthersToTranslate) {
-            translationData = {
-                translatedTitle: "",
-                translatedShortDescription: "",
-                translatedContent: "",
-                translatorId: null,
-                isTranslated:false,
-              };
+          translationData = {
+            translatedTitle: "",
+            translatedShortDescription: "",
+            translatedContent: "",
+            translatorId: null,
+            isTranslated: false,
+          };
         } else {
-            translationData = {
-                translatedTitle: "",
-                translatedShortDescription: "",
-                translatedContent: "",
-                translatorId: translatorId,
-                isTranslated:true
-            };
+          translationData = {
+            translatedTitle: "",
+            translatedShortDescription: "",
+            translatedContent: "",
+            translatorId: translatorId,
+            isTranslated: true,
+          };
         }
-        await addTranslationToBlogPost(postToDelete.post_id,translationData);
+        await addTranslationToBlogPost(postToDelete.post_id, translationData);
 
-        setSnackbarSeverity('success');
-        setSnackbarMessage('Translation deleted successfully');
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Translation deleted successfully");
         setRefresh(!refresh);
       } catch (error) {
-        setSnackbarSeverity('error');
-        setSnackbarMessage('Error deleting translation');
-        console.log('Error deleting: ', error);
+        setSnackbarSeverity("error");
+        setSnackbarMessage("Error deleting translation");
+        console.log("Error deleting: ", error);
       } finally {
         setBackdropOpen(false);
         setSnackbarOpen(true);
@@ -152,9 +161,10 @@ const MyTranslations = ({ heading }) => {
   const handleSearchChange = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
-    const filtered = posts.filter((post) =>
-      post.title.toLowerCase().includes(query) ||
-      post.shortDescription.toLowerCase().includes(query)
+    const filtered = posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.shortDescription.toLowerCase().includes(query)
     );
     setFilteredPosts(filtered);
   };
@@ -173,10 +183,13 @@ const MyTranslations = ({ heading }) => {
       <div className={styles.posts}>
         {filteredPosts.map((post) => (
           <div key={post.post_id} className={styles.post}>
-            <Link href={`/blog/${post.post_id}/${post.url}`} className={styles.links}>
+            <Link
+              href={`/blog/${post.post_id}/${post.url}`}
+              className={styles.links}
+            >
               <CardComponent
                 title={post.title}
-                src={`http://localhost:8800/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
+                src={`http://doctorazi.com:8800/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
                 alt={post.altName}
                 desc={post.shortDescription}
               />
@@ -186,8 +199,12 @@ const MyTranslations = ({ heading }) => {
               variant="outlined"
               aria-label="Disabled button group"
             >
-              <Button onClick={() => onClickPostHandler(post)}><EditSharpIcon /></Button>
-              <Button onClick={() => handleClickOpen(post)}><DeleteOutlineSharpIcon sx={{ color: 'crimson' }} /></Button>
+              <Button onClick={() => onClickPostHandler(post)}>
+                <EditSharpIcon />
+              </Button>
+              <Button onClick={() => handleClickOpen(post)}>
+                <DeleteOutlineSharpIcon sx={{ color: "crimson" }} />
+              </Button>
             </ButtonGroup>
           </div>
         ))}
@@ -198,7 +215,7 @@ const MyTranslations = ({ heading }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{'Delete Post'}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Delete Post"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Do you want others to be able to translate this post?
@@ -211,7 +228,7 @@ const MyTranslations = ({ heading }) => {
         </DialogActions>
       </Dialog>
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backdropOpen}
       >
         <CircularProgress color="inherit" />
@@ -221,7 +238,11 @@ const MyTranslations = ({ heading }) => {
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
       >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>

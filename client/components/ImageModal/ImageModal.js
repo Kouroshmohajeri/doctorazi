@@ -1,6 +1,6 @@
-import React from 'react';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import React from "react";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 const ImageModal = ({ open, onClose, imageUrl, folderName, path }) => {
   return (
@@ -12,17 +12,20 @@ const ImageModal = ({ open, onClose, imageUrl, folderName, path }) => {
     >
       <Box
         sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          bgcolor: 'background.paper',
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          bgcolor: "background.paper",
           boxShadow: 24,
-          outline: 'none',
-          borderRadius: '15px'
+          outline: "none",
+          borderRadius: "15px",
         }}
       >
-        <img src={`http://localhost:8800/${path}/${folderName}/${imageUrl}`} alt={imageUrl} />
+        <img
+          src={`http://doctorazi.com:8800/${path}/${folderName}/${imageUrl}`}
+          alt={imageUrl}
+        />
       </Box>
     </Modal>
   );

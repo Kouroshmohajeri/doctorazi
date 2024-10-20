@@ -19,7 +19,10 @@ import {
   updateBlogPost,
   uploadImage,
 } from "@/lib/actions/blogPost/actions";
-import { checkDuplicateUrl, deleteBlogImage } from "@/lib/actions/blogImage/actions";
+import {
+  checkDuplicateUrl,
+  deleteBlogImage,
+} from "@/lib/actions/blogImage/actions";
 
 const FroalaEditorComponent = dynamic(
   async () => {
@@ -58,7 +61,7 @@ const TextEditor = () => {
     if (localStorage.getItem("mainPicture")) {
       setMainPicture(localStorage.getItem("mainPicture"));
     }
-    console.log(localStorage.getItem("isEditMode"))
+    console.log(localStorage.getItem("isEditMode"));
     // Check if isEditMode is set in localStorage
     if (localStorage.getItem("isEditMode")) {
       setIsEditMode(true);
@@ -185,7 +188,7 @@ const TextEditor = () => {
           if (updatePostId) {
             if (
               !mainPicture.name &&
-              mainPicture.includes("http://localhost:8800/blogs/")
+              mainPicture.includes("http://doctorazi.com:8800/blogs/")
             ) {
               const updatePostData = {
                 authorId,
@@ -351,7 +354,7 @@ const TextEditor = () => {
                 <img
                   src={
                     mainPicture.name ||
-                    !mainPicture.includes("http://localhost:8800/blogs")
+                    !mainPicture.includes("http://doctorazi.com:8800/blogs")
                       ? URL.createObjectURL(mainPicture)
                       : mainPicture
                   }
@@ -447,14 +450,14 @@ const TextEditor = () => {
                   buttonsVisible: 2,
                 },
               },
-              imageUploadURL: "http://localhost:8800/api/blogImages/upload",
+              imageUploadURL: "http://doctorazi.com:8800/api/blogImages/upload",
               imageUploadParam: "file",
               imageUploadMethod: "POST",
               imageMaxSize: 6 * 1024 * 1024, // 6MB max image size
               imageManagerLoadURL:
-                "http://localhost:8800/api/blogImages/images",
+                "http://doctorazi.com:8800/api/blogImages/images",
               imageManagerDeleteURL:
-                "http://localhost:8800/api/blogImages/delete", // Added this line for deleting an image
+                "http://doctorazi.com:8800/api/blogImages/delete", // Added this line for deleting an image
               imageManagerDeleteMethod: "DELETE",
               // imageEditButtons: ['imageAlt', 'imageReplace', 'imageRemove'],
               events: {

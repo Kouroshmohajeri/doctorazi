@@ -1,24 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
-import CardComponent from '../Card/CardComponent';
-import { UserDataContext } from '@/context/UserDatasContext';
-import { getNotTranslatedBlogPosts } from '@/lib/actions/blogPost/actions';
-import styles from '../BlogsManagement/PostsManagement.module.css';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import { sideMenuContext } from '@/context/SideMenuContext';
-import Link from 'next/link';
-import TextField from '@mui/material/TextField';
-import TranslateIcon from '@mui/icons-material/Translate';
-import { translateContext } from '@/context/TranslateMode';
+import React, { useContext, useEffect, useState } from "react";
+import CardComponent from "../Card/CardComponent";
+import { UserDataContext } from "@/context/UserDatasContext";
+import { getNotTranslatedBlogPosts } from "@/lib/actions/blogPost/actions";
+import styles from "../BlogsManagement/PostsManagement.module.css";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+import { sideMenuContext } from "@/context/SideMenuContext";
+import Link from "next/link";
+import TextField from "@mui/material/TextField";
+import TranslateIcon from "@mui/icons-material/Translate";
+import { translateContext } from "@/context/TranslateMode";
 
 export default function UnTranslatedPosts({ heading }) {
   const { users, fetchCookies } = useContext(UserDataContext);
-  const { isTranslateModeOn, setIsTranslateModeOn } = useContext(translateContext);
+  const { isTranslateModeOn, setIsTranslateModeOn } =
+    useContext(translateContext);
 
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const { setIsSelected } = useContext(sideMenuContext);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchCookies();
@@ -37,12 +38,12 @@ export default function UnTranslatedPosts({ heading }) {
   };
 
   useEffect(() => {
-      fetchPosts();
+    fetchPosts();
   }, []);
 
   const onClickTranslateHandler = (post) => {
     // Reseting Editor
-    localStorage.removeItem('translatePostId');
+    localStorage.removeItem("translatePostId");
     localStorage.removeItem("translateTitle");
     localStorage.removeItem("translateShortDescription");
     localStorage.removeItem("translateContent");
@@ -63,9 +64,10 @@ export default function UnTranslatedPosts({ heading }) {
   const handleSearchChange = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
-    const filtered = posts.filter(post =>
-      post.title.toLowerCase().includes(query) ||
-      post.shortDescription.toLowerCase().includes(query)
+    const filtered = posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.shortDescription.toLowerCase().includes(query)
     );
     setFilteredPosts(filtered);
   };
@@ -84,10 +86,13 @@ export default function UnTranslatedPosts({ heading }) {
       <div className={styles.posts}>
         {filteredPosts.map((post) => (
           <div key={post.post_id} className={styles.post}>
-            <Link href={`/blog/${post.post_id}/${post.url}`} className={styles.links}>
+            <Link
+              href={`/blog/${post.post_id}/${post.url}`}
+              className={styles.links}
+            >
               <CardComponent
                 title={post.title}
-                src={`http://localhost:8800/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
+                src={`http://doctorazi.com:8800/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
                 alt={post.altName}
                 desc={post.shortDescription}
               />
@@ -97,7 +102,13 @@ export default function UnTranslatedPosts({ heading }) {
               variant="outlined"
               aria-label="Disabled button group"
             >
-              <Button onClick={() => { onClickTranslateHandler(post) }}><TranslateIcon /></Button>
+              <Button
+                onClick={() => {
+                  onClickTranslateHandler(post);
+                }}
+              >
+                <TranslateIcon />
+              </Button>
             </ButtonGroup>
           </div>
         ))}
