@@ -22,7 +22,7 @@ const RandomTwoBlogs = () => {
             title={post.title}
             desc={post.shortDescription}
             alt={post.altName}
-            image={`http://doctorazi.com:8800/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
+            image={`http://localhost:8800/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
           />
         </Link>
       ))}
