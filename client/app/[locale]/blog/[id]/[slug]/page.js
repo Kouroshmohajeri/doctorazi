@@ -67,7 +67,7 @@ const BlogPostContent = async ({ params }) => {
                 <div className={styles.bannerImgWrapper}>
                   <Image
                     className={styles.bannerImg}
-                    src={`https://localhost:8443/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
+                    src={`https://doctorazi.com:8443/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
                     alt={post.altName}
                     fill
                     sizes="50vw"
