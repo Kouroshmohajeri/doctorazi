@@ -47,10 +47,6 @@ app.use(express.json()); // Parse JSON requests
 app.use(express.static("src/public"));
 
 // Routes
-app.get("/api", (req, res) => {
-  console.log("API endpoint hit");
-  res.send("Hello, API!");
-});
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/clinicalRecords", clinicalRecordRoutes);
 app.use("/api/users", userRoutes);

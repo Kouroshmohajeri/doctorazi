@@ -188,7 +188,7 @@ const TextEditor = () => {
           if (updatePostId) {
             if (
               !mainPicture.name &&
-              mainPicture.includes("http://doctorazi.com:8443/blogs/")
+              mainPicture.includes("https://doctorazi.com:8443/blogs/")
             ) {
               const updatePostData = {
                 authorId,
@@ -354,7 +354,7 @@ const TextEditor = () => {
                 <img
                   src={
                     mainPicture.name ||
-                    !mainPicture.includes("http://doctorazi.com:8443/blogs")
+                    !mainPicture.includes("https://doctorazi.com:8443/blogs")
                       ? URL.createObjectURL(mainPicture)
                       : mainPicture
                   }
@@ -450,14 +450,15 @@ const TextEditor = () => {
                   buttonsVisible: 2,
                 },
               },
-              imageUploadURL: "http://doctorazi.com:8443/api/blogImages/upload",
+              imageUploadURL:
+                "https://doctorazi.com:8443/api/blogImages/upload",
               imageUploadParam: "file",
               imageUploadMethod: "POST",
               imageMaxSize: 6 * 1024 * 1024, // 6MB max image size
               imageManagerLoadURL:
-                "http://doctorazi.com:8443/api/blogImages/images",
+                "https://doctorazi.com:8443/api/blogImages/images",
               imageManagerDeleteURL:
-                "http://doctorazi.com:8443/api/blogImages/delete", // Added this line for deleting an image
+                "https://doctorazi.com:8443/api/blogImages/delete", // Added this line for deleting an image
               imageManagerDeleteMethod: "DELETE",
               // imageEditButtons: ['imageAlt', 'imageReplace', 'imageRemove'],
               events: {

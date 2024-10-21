@@ -132,7 +132,7 @@ const Biography = () => {
           const records = imageResponse.files;
           if (records && records.length > 0) {
             const firstImageRecord = records[0];
-            const imageUrl = `http://doctorazi.com:8443/profileImage/${firstFolder}/${firstImageRecord}`;
+            const imageUrl = `https://doctorazi.com:8443/profileImage/${firstFolder}/${firstImageRecord}`;
             setProfileImage(imageUrl);
           }
         }

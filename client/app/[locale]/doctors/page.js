@@ -140,7 +140,7 @@ export default function Page() {
                         ? doctor.fullName
                         : doctor.fullNameTranslated
                     }
-                    image={`http://doctorazi.com:8443/profileImage/pi_${doctor.client_id}/${doctor.fileName}`}
+                    image={`https://doctorazi.com:8443/profileImage/pi_${doctor.client_id}/${doctor.fileName}`}
                     speciality={doctor.specialityName}
                     alt={doctor.fullName.replace(/\s+/g, "-")}
                     buttonText={t("Doctors:ShowProfile")}
