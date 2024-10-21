@@ -49,7 +49,7 @@ const Page = async ({ params }) => {
       const filesResponse = await getProfileImageByFolderName(folderName);
       const files = filesResponse.files;
       if (files.length > 0) {
-        profileImage = `http://doctorazi.com:8800/profileImage/pi_${clientId}/${files[0]}`;
+        profileImage = `http://doctorazi.com:8443/profileImage/pi_${clientId}/${files[0]}`;
       }
     }
 

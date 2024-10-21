@@ -41,11 +41,9 @@ export const uploadImage = (req, res) => {
       return res.status(500).json({ error: err.message });
     }
     if (req.file) {
-      res
-        .status(200)
-        .json({
-          link: `http://doctorazi.com:8800/blogImages/${req.file.filename}`,
-        });
+      res.status(200).json({
+        link: `http://doctorazi.com:8443/blogImages/${req.file.filename}`,
+      });
     } else {
       console.error("No file received");
       res.status(400).json({ error: "No file received" });
@@ -60,8 +58,8 @@ export const getImages = (req, res) => {
       return res.status(500).json({ error: "Error reading image directory" });
     }
     const images = files.map((file) => ({
-      url: `http://doctorazi.com:8800/blogImages/${file}`,
-      thumb: `http://doctorazi.com:8800/blogImages/${file}`,
+      url: `http://doctorazi.com:8443/blogImages/${file}`,
+      thumb: `http://doctorazi.com:8443/blogImages/${file}`,
     }));
     res.status(200).json(images);
   });

@@ -98,7 +98,7 @@ app.get("/oauth/callback", async (req, res) => {
       params: {
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "http://localhost:8800/oauth/callback", // This should match the redirect_uri in your OAuth URL
+        redirect_uri: "http://localhost:8443/oauth/callback", // This should match the redirect_uri in your OAuth URL
       },
       headers: {
         Authorization: `Basic ${Buffer.from(
@@ -185,7 +185,7 @@ app.get("/", (req, res) => {
 });
 
 // Start the server
-const port = process.env.PORT || 8800;
+const port = process.env.PORT || 8443;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

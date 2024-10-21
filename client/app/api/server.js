@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://doctorazi.com:8800/api",
+  baseURL: "http://doctorazi.com:8443/api",
   withCredentials: true,
   timeout: 10000, // 10 seconds timeout
 });

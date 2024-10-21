@@ -16,7 +16,7 @@ export default decoder;
 export const serverSideDecoder = async (encryptedToken) => {
   let code;
   try {
-    const response = await fetch(`http://doctorazi.com:8800/api/verify-token`, {
+    const response = await fetch(`http://doctorazi.com:8443/api/verify-token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

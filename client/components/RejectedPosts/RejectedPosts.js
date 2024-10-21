@@ -107,7 +107,7 @@ export default function RejectedPosts({ heading }) {
     localStorage.setItem("editMode", true);
     localStorage.setItem(
       "mainPicture",
-      `http://doctorazi.com:8800/blogs/${authorId}/${post.post_id}/${post.imageUrl}`
+      `http://doctorazi.com:8443/blogs/${authorId}/${post.post_id}/${post.imageUrl}`
     );
     setIsSelected(1);
   };
@@ -208,7 +208,7 @@ export default function RejectedPosts({ heading }) {
             >
               <CardComponent
                 title={post.title}
-                src={`http://doctorazi.com:8800/blogs/${authorId}/${post.post_id}/${post.imageUrl}`}
+                src={`http://doctorazi.com:8443/blogs/${authorId}/${post.post_id}/${post.imageUrl}`}
                 alt={post.altName}
                 desc={post.shortDescription}
               />

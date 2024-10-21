@@ -189,7 +189,7 @@ const MyTranslations = ({ heading }) => {
             >
               <CardComponent
                 title={post.title}
-                src={`http://doctorazi.com:8800/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
+                src={`http://doctorazi.com:8443/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
                 alt={post.altName}
                 desc={post.shortDescription}
               />
