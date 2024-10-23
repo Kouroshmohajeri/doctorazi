@@ -3,8 +3,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "www.doctorazi.com",
+        protocol: "http",
+        hostname: "localhost",
         port: "8443",
       },
     ],
