@@ -38,7 +38,7 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-  origin: ["doctorazi.com"], // Your frontend domain
+  origin: ["https://doctorazi.com", "https://www.doctorazi.com"], // Your frontend domain
   credentials: true, // Allow cookies to be sent
 };
 
