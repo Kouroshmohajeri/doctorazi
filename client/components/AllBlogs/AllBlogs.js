@@ -24,7 +24,7 @@ const AllBlogs = () => {
         >
           <CardComponent
             title={post.title}
-            src={`https://doctorazi.com/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
+            src={`https://www.doctorazi.com/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
             alt={post.altName}
             desc={post.shortDescription}
           />
