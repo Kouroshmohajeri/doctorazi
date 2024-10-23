@@ -38,8 +38,19 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-  origin: ["https://doctorazi.com", "https://www.doctorazi.com"], // Your frontend domain
-  credentials: true, // Allow cookies to be sent
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      "https://doctorazi.com",
+      "https://www.doctorazi.com",
+    ];
+
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, origin);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
