@@ -45,7 +45,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json()); // Parse JSON requests
 app.use(express.static("src/public"));
-app.use("/api/blogImages", express.static("src/public/blogImages"));
+app.use("/api/blogImages", express.static("src/public/blogs"));
 
 // Routes
 app.use("/api/appointments", appointmentRoutes);
