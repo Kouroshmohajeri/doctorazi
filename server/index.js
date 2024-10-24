@@ -29,11 +29,6 @@ import documentRouter from "./src/routes/documentRouter.js";
 import { pool } from "./src/config/db.js";
 import { decryptPayload } from "./src/utils/encryption.js";
 import jwt from "jsonwebtoken";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // Load environment variables from .env file
 dotenv.config();
@@ -50,7 +45,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json()); // Parse JSON requests
 app.use(express.static("src/public"));
-app.use("/blogs", express.static(path.join(__dirname, "src/public/blogs")));
 
 // Routes
 app.use("/api/appointments", appointmentRoutes);
