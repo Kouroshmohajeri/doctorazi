@@ -43,7 +43,7 @@ const RecentBlogs = () => {
                     component="img"
                     alt={post.title}
                     height="140"
-                    image={`https://doctorazi.com/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
+                    image={`http://62.60.204.118:8443/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
                     title={post.title}
                   />
                   <CardContent>
