@@ -37,16 +37,8 @@ dotenv.config();
 const app = express();
 
 // Middleware
-const allowedOrigins = ["https://doctorazi.com", "https://www.doctorazi.com"];
-
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, origin); // Allow the origin
-    } else {
-      callback(new Error("Not allowed by CORS")); // Reject the request
-    }
-  },
+  origin: "*",
   credentials: true, // Allow cookies to be sent
 };
 
