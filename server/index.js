@@ -38,14 +38,14 @@ const app = express();
 
 // Middleware
 const corsOptions = {
-  origin: "doctorazi.com",
+  origin: "*",
   credentials: true, // Allow cookies to be sent
 };
 
 app.use(cors(corsOptions));
 app.use(express.json()); // Parse JSON requests
 app.use(express.static("src/public"));
-app.use("/api/blogs", express.static("src/public/blogs"));
+app.use("/api/blogImages", express.static("src/public/blogImages"));
 
 // Routes
 app.use("/api/appointments", appointmentRoutes);
