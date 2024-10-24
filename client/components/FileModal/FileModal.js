@@ -128,7 +128,7 @@ const FileModal = ({ open, onClose, folderName, path, userType, fileType }) => {
               {files.map((file, index) => (
                 <li key={index} className={styles.listItem}>
                   <img
-                    src={`https://doctorazi.com:8443/${path}/${folderName}/${file}`}
+                    src={`https://doctorazi.com/api/${path}/${folderName}/${file}`}
                     width={100}
                     height={100}
                     onClick={() => handleImageClick(file)}

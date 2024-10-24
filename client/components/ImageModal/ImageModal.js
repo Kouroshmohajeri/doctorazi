@@ -23,7 +23,7 @@ const ImageModal = ({ open, onClose, imageUrl, folderName, path }) => {
         }}
       >
         <img
-          src={`https://doctorazi.com:8443/${path}/${folderName}/${imageUrl}`}
+          src={`https://doctorazi.com/api/${path}/${folderName}/${imageUrl}`}
           alt={imageUrl}
         />
       </Box>

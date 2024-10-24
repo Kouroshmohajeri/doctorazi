@@ -100,7 +100,7 @@ export default function ManageBlogs({ heading }) {
     localStorage.setItem("editMode", true);
     localStorage.setItem(
       "mainPicture",
-      `https://doctorazi.com:8443/blogs/${authorId}/${post.post_id}/${post.imageUrl}`
+      `https://doctorazi.com/api/blogs/${authorId}/${post.post_id}/${post.imageUrl}`
     );
     setIsSelected(1);
   };

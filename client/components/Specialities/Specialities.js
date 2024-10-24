@@ -28,6 +28,7 @@ const Specialities = () => {
                     alt="AzadehHosseini"
                     layout="fill"
                     objectFit="cover"
+                    priority
                   />
                   <div className={styles.guide}>
                     <span>{t("Specialities:Gynecologist")}</span>
@@ -44,6 +45,7 @@ const Specialities = () => {
                   alt="BrowsingDoctors"
                   layout="fill"
                   objectFit="cover"
+                  priority
                 />
                 <div className={styles.overlay}></div>
                 <div className={styles.text}>
