@@ -72,6 +72,7 @@ const BlogPostContent = async ({ params }) => {
                     fill
                     sizes="50vw"
                   />
+                  {`${post.author_id}/${post.post_id}/${post.imageUrl}`}
                 </div>
               )}
             </div>
