@@ -45,7 +45,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json()); // Parse JSON requests
 app.use(express.static("src/public"));
+app.use("/api/blogImages", express.static("src/public/blogImages"));
 app.use("/api/blogs", express.static("src/public/blogs"));
+app.use("/api/crecord", express.static("src/public/crecord"));
+app.use("/api/crecord", express.static("src/public/crecord"));
+app.use("/api/prescription", express.static("src/public/prescription"));
+app.use("/api/profileImage", express.static("src/public/profileImage"));
 
 // Routes
 app.use("/api/appointments", appointmentRoutes);
