@@ -16,16 +16,13 @@ export default decoder;
 export const serverSideDecoder = async (encryptedToken) => {
   let code;
   try {
-    const response = await fetch(
-      `https://doctorazi.com:8443/api/verify-token`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ encryptedToken: encryptedToken }),
-      }
-    );
+    const response = await fetch(`https://doctorazi.com/api/verify-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ encryptedToken: encryptedToken }),
+    });
     if (!response.ok) {
       const errorBody = await response.json(); // Parsing the JSON body of the response
       code = errorBody.code;
