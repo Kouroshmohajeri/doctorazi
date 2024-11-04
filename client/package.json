@@ -44,6 +44,7 @@
     "react-froala-wysiwyg": "^4.2.0",
     "react-i18next": "^14.0.5",
     "sharp": "^0.33.2",
+    "trix": "^2.1.8",
     "yup": "^1.4.0"
   },
   "devDependencies": {
