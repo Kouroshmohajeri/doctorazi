@@ -58,16 +58,16 @@ class UserController {
           user_id: newUser.user_id,
           username: newUser.username,
           user_type: newUser.user_type,
-          doctors: "",
+          doctors: newUser.doctors,
         },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "2h" }
       );
-
+      const encryptedPayload = encryptPayload(token);
       // Return the token as a response
       res.setHeader(
         "Set-Cookie",
-        cookie.serialize("token", token, {
+        cookie.serialize("token", encryptedPayload, {
           httpOnly: true,
           sameSite: "strict",
           path: "/",
