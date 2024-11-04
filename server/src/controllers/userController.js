@@ -55,7 +55,7 @@ class UserController {
       // Generate JWT token for user's session
       const token = jwt.sign(
         {
-          user_id: newUser.user_id,
+          user_id: newUser.user_id * 8312,
           username: newUser.username,
           user_type: newUser.user_type,
           doctors: newUser.doctors,

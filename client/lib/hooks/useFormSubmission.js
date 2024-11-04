@@ -17,7 +17,7 @@ export function useFormSubmission(router) {
       const endpoint = `/users/${formType.toLowerCase()}`;
       const response = await Login(values, endpoint);
       // const response = await API.post(endpoint,values);
-      console.log(response);
+      console.log(response.data.encryptedPayload);
       const userInfo = await decoder(response.data.encryptedPayload);
       const user = await getUserByUsername(userInfo.data.username);
       localStorage.setItem("isLoggedIn", true);
