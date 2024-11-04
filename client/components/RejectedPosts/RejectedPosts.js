@@ -208,7 +208,7 @@ export default function RejectedPosts({ heading }) {
             >
               <CardComponent
                 title={post.title}
-                src={`https://doctorazi.com/api/blogs/${authorId}/${post.post_id}/${post.imageUrl}`}
+                src={`https://doctorazi.com/api/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
                 alt={post.altName}
                 desc={post.shortDescription}
               />
