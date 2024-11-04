@@ -42,7 +42,7 @@ const AuthorController = {
 
   add: async (req, res) => {
     const authorData = req.body;
-    console.log(authorData);
+    console.log("Auhtor data:", authorData);
     try {
       const newAuthor = await authorRepository.add(authorData);
       res.json(newAuthor);
