@@ -40,9 +40,9 @@ export const getBlogListByUserId = async (userId) => {
   }
 };
 
-export const addAuthor = async (authorData, isTrue) => {
+export const addAuthor = async (userId, isHeadAuthor) => {
   try {
-    const response = await API.post("/authors/add", { authorData, isTrue });
+    const response = await API.post("/authors/add", { userId, isHeadAuthor });
     return response.data;
   } catch (error) {
     console.error("Error adding author:", error);

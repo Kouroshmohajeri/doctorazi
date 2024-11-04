@@ -63,10 +63,10 @@ const HirePanel = () => {
           await addNewDoctor(currentUser.user_id);
           break;
         case 3:
-          await addAuthor(currentUser.user_id, "false");
+          await addAuthor(currentUser.user_id, false);
           break;
         case 4:
-          await addAuthor(currentUser.user_id, "true");
+          await addAuthor(currentUser.user_id, true);
           break;
         case 5:
           await createTranslator(currentUser.user_id);
