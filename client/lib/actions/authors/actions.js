@@ -40,7 +40,7 @@ export const getBlogListByUserId = async (userId) => {
   }
 };
 
-export const addAuthor = async (authorData) => {
+export const addAuthor = async ({ authorData }) => {
   try {
     console.log(authorData);
     const response = await API.post("/authors/add", authorData);
