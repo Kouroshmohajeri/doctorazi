@@ -74,7 +74,9 @@ class UserController {
           maxAge: 3600000,
         })
       );
-      res.status(201).json({ message: "User registered successfully", token });
+      res
+        .status(201)
+        .json({ message: "User registered successfully", encryptedPayload });
     } catch (error) {
       console.error("Error registering user:", error);
       res
