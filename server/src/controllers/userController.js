@@ -58,7 +58,7 @@ class UserController {
           user_id: newUser.user_id,
           username: newUser.username,
           user_type: newUser.user_type,
-          doctors: newUser.doctors,
+          doctors: "",
         },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
