@@ -1,4 +1,4 @@
-import authorRepository from '../repository/authorRepository.js';
+import authorRepository from "../repository/authorRepository.js";
 
 const AuthorController = {
   getAll: async (req, res) => {
@@ -42,6 +42,7 @@ const AuthorController = {
 
   add: async (req, res) => {
     const authorData = req.body;
+    console.log(authorData);
     try {
       const newAuthor = await authorRepository.add(authorData);
       res.json(newAuthor);
