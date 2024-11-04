@@ -80,7 +80,7 @@ const Page = () => {
   return (
     <main>
       <SideMenu
-        heading={`Welcome ${writerName || "Loading..."}`}
+        heading={`Welcome ${writerName || "Loading..."} `}
         menuList={[
           { text: "Panel", icon: <WindowIcon /> },
           { text: "Write Blog", icon: <CreateSharpIcon /> },

@@ -201,7 +201,7 @@ export default function ManageBlogs({ heading }) {
             >
               <CardComponent
                 title={post.title}
-                src={`https://doctorazi.com:8443/blogs/${authorId}/${post.post_id}/${post.imageUrl}`}
+                src={`https://doctorazi.com/api/blogs/${authorId}/${post.post_id}/${post.imageUrl}`}
                 alt={post.altName}
                 desc={post.shortDescription}
               />
