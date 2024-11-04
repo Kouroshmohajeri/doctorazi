@@ -52,7 +52,7 @@ class UserController {
         password: hashedPassword,
         user_type: 1,
       });
-
+      console.log("new user Id:", newUser.id);
       // Generate JWT token for user's session
       const token = jwt.sign(
         {
