@@ -134,11 +134,9 @@ app.get("/oauth/callback", async (req, res) => {
 // JWT verification
 app.post("/api/verify-token", async (req, res) => {
   const { encryptedToken } = req.body;
-  console.log("Encrypted Token:", encryptedToken);
   try {
     const decryptedPayload = decryptPayload(encryptedToken);
     const verified = jwt.verify(decryptedPayload, process.env.JWT_SECRET);
-    console.log(verified);
     if (verified) {
       return res.json({
         success: true,
