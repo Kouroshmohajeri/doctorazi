@@ -42,9 +42,7 @@ export const getBlogListByUserId = async (userId) => {
 
 export const addAuthor = async (authorData, isTrue) => {
   try {
-    console.log(authorData, isTrue);
-    const response = await API.post("/authors/add", authorData);
-    console.log(response);
+    const response = await API.post("/authors/add", { authorData, isTrue });
     return response.data;
   } catch (error) {
     console.error("Error adding author:", error);
