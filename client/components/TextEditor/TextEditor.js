@@ -1,14 +1,16 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Snackbar from "@mui/material/Snackbar";
+import {
+  TextField,
+  Typography,
+  Snackbar,
+  CircularProgress,
+  Backdrop,
+  Button,
+  Grid,
+  Paper,
+} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
-import Backdrop from "@mui/material/Backdrop";
-import "trix/dist/trix.css"; // Import Trix CSS
-import styles from "./TextEditor.module.css";
-import GoogleSearchResult from "../GoogleSearchResult/GoogleSearchResult";
 import { UserDataContext } from "@/context/UserDatasContext";
 import { getAuthorByUserId } from "@/lib/actions/authors/actions";
 import {
@@ -21,17 +23,15 @@ import {
   checkDuplicateUrl,
   deleteBlogImage,
 } from "@/lib/actions/blogImage/actions";
-
-// Import Trix editor (requires `window` object)
-if (typeof window !== "undefined") {
-  require("trix");
-}
+import "react-quill/dist/quill.snow.css"; // Import Quill's CSS
+import ReactQuill from "react-quill"; // Import React Quill
+import styles from "./TextEditor.module.css";
+import Image from "next/image";
 
 const TextEditor = () => {
   const [title, setTitle] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [url, setUrl] = useState("");
-  const [content, setContent] = useState("");
   const [mainPicture, setMainPicture] = useState(null);
   const [altName, setAltName] = useState("");
   const [authorId, setAuthorId] = useState(0);
@@ -42,6 +42,7 @@ const TextEditor = () => {
   const [fileInputKey, setFileInputKey] = useState(Date.now());
   const [isEditMode, setIsEditMode] = useState(false);
   const { users, fetchCookies } = useContext(UserDataContext);
+  const [editorContent, setEditorContent] = useState("");
 
   useEffect(() => {
     fetchCookies();
@@ -75,7 +76,7 @@ const TextEditor = () => {
     if (savedTitle) setTitle(savedTitle);
     if (savedShortDescription) setShortDescription(savedShortDescription);
     if (savedUrl) setUrl(savedUrl);
-    if (savedContent) setContent(savedContent);
+    if (savedContent) setEditorContent(savedContent);
     if (savedAltName) setAltName(savedAltName);
   }, []);
 
@@ -83,9 +84,9 @@ const TextEditor = () => {
     localStorage.setItem("title", title);
     localStorage.setItem("shortDescription", shortDescription);
     localStorage.setItem("url", url);
-    localStorage.setItem("content", content);
+    localStorage.setItem("content", editorContent);
     localStorage.setItem("altName", altName);
-  }, [title, shortDescription, url, content, altName]);
+  }, [title, shortDescription, url, editorContent, altName]);
 
   const handleShortDescriptionChange = (event) => {
     const input = event.target.value;
@@ -119,6 +120,8 @@ const TextEditor = () => {
     );
     if (confirmed) {
       try {
+        const content = editorContent;
+
         if (
           !title ||
           !shortDescription ||
@@ -161,23 +164,45 @@ const TextEditor = () => {
         } else {
           const updatePostId = localStorage.getItem("postId");
           if (updatePostId) {
-            const file = localStorage.getItem("mainPicture");
-            const updateFileName = file.split("/").pop();
-            await deleteImage(authorId, updatePostId, updateFileName);
-            await uploadImage(mainPicture, authorId, updatePostId);
-            await updateBlogPost(updatePostId, postData);
+            if (
+              !mainPicture.name &&
+              mainPicture.includes("https://doctorazi.com:8443/blogs/")
+            ) {
+              const updatePostData = {
+                authorId,
+                title,
+                shortDescription,
+                content,
+                url: formattedUrl,
+                altName,
+                imageUrl: fileName,
+              };
+              await updateBlogPost(updatePostId, updatePostData);
+            } else {
+              const file = localStorage.getItem("mainPicture");
+              const updateFileName = file.split("/").pop();
+              await deleteImage(authorId, updatePostId, updateFileName);
+              await uploadImage(mainPicture, authorId, updatePostId);
+              await updateBlogPost(updatePostId, postData);
+            }
           }
         }
         setMessage("Uploaded successfully!");
         setSeverity("success");
         setOpenSnackbar(true);
         setLoading(false);
-        localStorage.clear();
+        localStorage.removeItem("title");
+        localStorage.removeItem("shortDescription");
+        localStorage.removeItem("url");
+        localStorage.removeItem("content");
+        localStorage.removeItem("altName");
+        localStorage.removeItem("mainPicture");
+        localStorage.removeItem("editMode");
 
         setTitle("");
         setShortDescription("");
         setUrl("");
-        setContent("");
+        setEditorContent(""); // Clear the editor
         setMainPicture(null);
         setAltName("");
         setFileInputKey(Date.now());
@@ -191,88 +216,191 @@ const TextEditor = () => {
     }
   };
 
-  return (
-    <div className={styles.editorContainer}>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <div className={styles.detailsImage}>
-        <TextField
-          label="URL"
-          variant="outlined"
-          placeholder="Enter blog URL..."
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <TextField
-          label="Title"
-          variant="outlined"
-          placeholder="Choose a title..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <TextField
-          variant="outlined"
-          multiline
-          rows={4}
-          placeholder="Enter a short description (max 150 chars)..."
-          inputProps={{ maxLength: 150 }}
-          value={shortDescription}
-          onChange={handleShortDescriptionChange}
-        />
-        <Typography>{shortDescription.length}/150</Typography>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleMainPictureChange}
-          key={fileInputKey}
-        />
-        <TextField
-          label="Alt Name"
-          variant="outlined"
-          placeholder="Enter alt name for the picture..."
-          value={altName}
-          onChange={handleAltNameChange}
-        />
-      </div>
-      <div className={styles.mainBlog}>
-        <GoogleSearchResult
-          title={title}
-          description={shortDescription}
-          url={url}
-        />
-        <trix-editor
-          input="content"
-          onChange={(event) => setContent(event.target.innerHTML)}
-        ></trix-editor>
-        <input id="content" type="hidden" value={content} />
-        <button onClick={handleAddBlogPost}>
-          {isEditMode ? "Update Translate" : "Add Translation"}
-        </button>
-        {isEditMode && (
-          <button onClick={() => localStorage.clear()}>
-            Reset to Add Post
-          </button>
-        )}
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={6000}
-          onClose={handleCloseSnackbar}
-        >
-          <MuiAlert
-            elevation={6}
-            variant="filled"
-            onClose={handleCloseSnackbar}
-            severity={severity}
+  const handleDeleteImage = async () => {
+    setMainPicture(null);
+    setFileInputKey(Date.now()); // Reset file input
+  };
+
+  const handleResetToAdd = () => {
+    localStorage.removeItem("title");
+    localStorage.removeItem("shortDescription");
+    localStorage.removeItem("url");
+    localStorage.removeItem("content");
+    localStorage.removeItem("altName");
+    localStorage.removeItem("mainPicture");
+    localStorage.removeItem("editMode");
+    localStorage.removeItem("postId");
+    setTitle("");
+    setShortDescription("");
+    setUrl("");
+    setEditorContent(""); // Clear the editor
+    setMainPicture(null);
+    setAltName("");
+  };
+
+  const googlePreview = (
+    <div className={styles.googlePreview}>
+      <div>
+        <Typography variant="h6" style={{ fontWeight: "bold" }}>
+          <span style={{ color: "#4285F4" }}>G</span>
+          <span style={{ color: "#EA4335" }}>o</span>
+          <span style={{ color: "#FABC05" }}>o</span>
+          <span style={{ color: "#4285F4" }}>g</span>
+          <span style={{ color: "#34A853" }}>l</span>
+          <span style={{ color: "#EA4335" }}>e</span> Preview
+        </Typography>
+        <div className={styles.googlePreviewCard}>
+          <div className={styles.previewLink}>
+            <Image
+              src="/images/logo/logo.jpg"
+              width="30"
+              height="30"
+              style={{ borderRadius: "50%" }}
+            />
+            <div className={styles.details}>
+              <Typography variant="body2">DoctorAzi</Typography>
+
+              <Typography variant="body2" className={styles.googlePreviewUrl}>
+                {url
+                  ? `https://doctorazi.com/${url}`
+                  : "https://doctorazi.com/your-url"}
+              </Typography>
+            </div>
+          </div>
+          <Typography className={styles.googlePreviewTitle}>
+            {title || "Your Blog Title"}
+          </Typography>
+          <Typography
+            variant="body2"
+            className={styles.googlePreviewDescription}
           >
-            {message}
-          </MuiAlert>
-        </Snackbar>
+            {shortDescription || "Short description of your blog post..."}
+          </Typography>
+        </div>
+      </div>
+      <div>
+        {mainPicture && (
+          <Image
+            src={URL.createObjectURL(mainPicture)}
+            alt={altName}
+            width="100"
+            height="100"
+            className={styles.googleImage}
+          />
+        )}
       </div>
     </div>
+  );
+
+  return (
+    <Paper className={styles.container}>
+      <Typography variant="h4" className={styles.title}>
+        {isEditMode ? "Edit Blog Post" : "Add Blog Post"}
+      </Typography>
+      <Grid container spacing={2} className={styles.formContainer}>
+        <Grid item xs={12} md={6}>
+          <TextField
+            fullWidth
+            label="Title"
+            variant="outlined"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
+            fullWidth
+            label="URL"
+            variant="outlined"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            required
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
+            fullWidth
+            label="Short Description"
+            variant="outlined"
+            multiline
+            rows={3}
+            value={shortDescription}
+            onChange={handleShortDescriptionChange}
+            required
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <div className={styles.buttons}>
+            <Button
+              variant="contained"
+              component="label"
+              className={styles.uploadButton}
+            >
+              Upload Image
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleMainPictureChange}
+                hidden
+                key={fileInputKey}
+              />
+            </Button>
+            {mainPicture && (
+              <>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={handleDeleteImage}
+                  className={styles.deleteButton}
+                >
+                  Delete Image
+                </Button>
+              </>
+            )}
+          </div>
+          {mainPicture && (
+            <TextField
+              fullWidth
+              label="Alt Name"
+              variant="outlined"
+              value={altName}
+              onChange={handleAltNameChange}
+              required
+            />
+          )}
+        </Grid>
+      </Grid>
+      {googlePreview}
+      <ReactQuill
+        value={editorContent}
+        onChange={setEditorContent}
+        placeholder="Write your blog content here..."
+        className={styles.quillEditor}
+      />
+      <div className={styles.submitButton}>
+        <Button variant="contained" color="primary" onClick={handleAddBlogPost}>
+          {isEditMode ? "Update Blog Post" : "Add Blog Post"}
+        </Button>
+      </div>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleCloseSnackbar}
+          severity={severity}
+        >
+          {message}
+        </MuiAlert>
+      </Snackbar>
+      <Backdrop open={loading} className={styles.backdrop}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </Paper>
   );
 };
 
