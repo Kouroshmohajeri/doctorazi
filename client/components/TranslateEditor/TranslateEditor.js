@@ -7,34 +7,25 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
 import styles from "./TranslateEditor.module.css";
 import { UserDataContext } from "@/context/UserDatasContext";
-import { getBlogPostByPostId, updateBlogPost, addTranslationToBlogPost } from "@/lib/actions/blogPost/actions";
+import {
+  getBlogPostByPostId,
+  updateBlogPost,
+  addTranslationToBlogPost,
+} from "@/lib/actions/blogPost/actions";
 import { getTranslatorByUserId } from "@/lib/actions/translator/actions";
 import { translateContext } from "@/context/TranslateMode";
 import { sideMenuContext } from "@/context/SideMenuContext";
 
-const FroalaEditorComponent = dynamic(
-  async () => {
-    const result = await Promise.all([
-      import("react-froala-wysiwyg"),
-      import("froala-editor/js/plugins.pkgd.min.js"),
-    ]);
-    return result[0];
-  },
-  { ssr: false }
-);
-
-const FroalaEditorView = dynamic(
-  () => import("react-froala-wysiwyg/FroalaEditorView"),
-  { ssr: false }
-);
+// Dynamically import Quill to prevent SSR issues
+const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 const TranslateEditor = () => {
   const [translateTitle, setTranslateTitle] = useState("");
-  const [translateShortDescription, setTranslateShortDescription] = useState("");
+  const [translateShortDescription, setTranslateShortDescription] =
+    useState("");
   const [translateContent, setTranslateContent] = useState("");
   const [existingTitle, setExistingTitle] = useState("");
   const [existingShortDescription, setExistingShortDescription] = useState("");
@@ -44,11 +35,10 @@ const TranslateEditor = () => {
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("error");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [key, setKey] = useState(false);
   const { users, fetchCookies } = useContext(UserDataContext);
-  const { isTranslateModeOn, setIsTranslateModeOn } = useContext(translateContext); 
-  const {setIsSelected} = useContext(sideMenuContext);
-
+  const { isTranslateModeOn, setIsTranslateModeOn } =
+    useContext(translateContext);
+  const { setIsSelected } = useContext(sideMenuContext);
 
   useEffect(() => {
     fetchCookies();
@@ -76,13 +66,11 @@ const TranslateEditor = () => {
             setExistingTitle(postData.title);
             setExistingShortDescription(postData.shortDescription);
             setExistingContent(postData.content);
-          }
-          else{
+          } else {
             setExistingTitle(postData.translatedTitle);
             setExistingShortDescription(postData.translatedShortDescription);
             setExistingContent(postData.translatedContent);
           }
-          
         } catch (error) {
           console.error("Error fetching post data:", error.message);
         }
@@ -93,11 +81,14 @@ const TranslateEditor = () => {
 
   useEffect(() => {
     const translatedTitleEdit = localStorage.getItem("translateTitleEdit");
-    const translatedShortDescriptionEdit = localStorage.getItem("translateShortDescriptionEdit");
+    const translatedShortDescriptionEdit = localStorage.getItem(
+      "translateShortDescriptionEdit"
+    );
     const translatedContentEdit = localStorage.getItem("translateContentEdit");
 
     if (translatedTitleEdit) setTranslateTitle(translatedTitleEdit);
-    if (translatedShortDescriptionEdit) setTranslateShortDescription(translatedShortDescriptionEdit);
+    if (translatedShortDescriptionEdit)
+      setTranslateShortDescription(translatedShortDescriptionEdit);
     if (translatedContentEdit) setTranslateContent(translatedContentEdit);
   }, []);
 
@@ -120,7 +111,11 @@ const TranslateEditor = () => {
     );
     if (confirmed) {
       try {
-        if (!translateTitle || !translateShortDescription || !translateContent) {
+        if (
+          !translateTitle ||
+          !translateShortDescription ||
+          !translateContent
+        ) {
           setMessage("Please fill in all fields");
           setSeverity("error");
           setOpenSnackbar(true);
@@ -134,7 +129,7 @@ const TranslateEditor = () => {
           translatedShortDescription: translateShortDescription,
           translatedContent: translateContent,
           translatorId: translatorId,
-          isTranslated:true
+          isTranslated: true,
         };
         const postId = localStorage.getItem("translatePostId");
         await addTranslationToBlogPost(postId, translationData);
@@ -143,7 +138,7 @@ const TranslateEditor = () => {
         setSeverity("success");
         setOpenSnackbar(true);
         setLoading(false);
-        localStorage.removeItem('postId');
+        localStorage.removeItem("postId");
         localStorage.removeItem("translateTitle");
         localStorage.removeItem("translateShortDescription");
         localStorage.removeItem("translateContent");
@@ -153,7 +148,7 @@ const TranslateEditor = () => {
         setTranslateShortDescription("");
         setTranslateContent("");
         setIsTranslateModeOn(true);
-        setIsSelected(1)
+        setIsSelected(1);
       } catch (error) {
         setMessage("Error adding translation post");
         setSeverity("error");
@@ -207,83 +202,27 @@ const TranslateEditor = () => {
           />
           <Typography
             variant="body2"
-            color={translateShortDescription.length <= 150 ? "textPrimary" : "error"}
+            color={
+              translateShortDescription.length <= 150 ? "textPrimary" : "error"
+            }
           >
             {translateShortDescription.length}/150
           </Typography>
-          <FroalaEditorComponent
-            key={key}
-            tag="textarea"
-            config={{
-              placeholderText: "Let's write a blog...",
-              toolbarButtons: {
-                moreText: {
-                  buttons: [
-                    "bold",
-                    "italic",
-                    "underline",
-                    "strikeThrough",
-                    "subscript",
-                    "superscript",
-                    "fontFamily",
-                    "fontSize",
-                    "textColor",
-                    "backgroundColor",
-                    "inlineClass",
-                    "inlineStyle",
-                    "clearFormatting",
-                  ],
-                },
-                moreParagraph: {
-                  buttons: [
-                    "alignLeft",
-                    "alignCenter",
-                    "formatOLSimple",
-                    "alignRight",
-                    "alignJustify",
-                    "formatOL",
-                    "formatUL",
-                    "paragraphFormat",
-                    "paragraphStyle",
-                    "lineHeight",
-                    "outdent",
-                    "indent",
-                    "quote",
-                  ],
-                },
-                moreRich: {
-                  buttons: [
-                    "insertLink",
-                    "insertImage",
-                    "insertVideo",
-                    "insertTable",
-                    "emoticons",
-                    "fontAwesome",
-                    "specialCharacters",
-                    "embedly",
-                    "insertFile",
-                    "insertHR",
-                  ],
-                },
-                moreMisc: {
-                  buttons: [
-                    "undo",
-                    "redo",
-                    "fullscreen",
-                    "print",
-                    "getPDF",
-                    "spellChecker",
-                    "selectAll",
-                    "html",
-                    "help",
-                  ],
-                  align: "right",
-                  buttonsVisible: 2,
-                },
-              },
+          <QuillEditor
+            theme="snow"
+            value={translateContent}
+            onChange={setTranslateContent}
+            placeholder="Let's write a blog..."
+            modules={{
+              toolbar: [
+                [{ header: "1" }, { header: "2" }, { font: [] }],
+                [{ align: [] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link", "image", "video"],
+                ["clean"], // Remove formatting button
+              ],
             }}
-            model={translateContent}
-            onModelChange={setTranslateContent}
           />
         </div>
         <div className={styles.existingColumn}>
@@ -292,12 +231,12 @@ const TranslateEditor = () => {
           <Typography variant="h6">Existing Short Description:</Typography>
           <Typography variant="body1">{existingShortDescription}</Typography>
           <Typography variant="h6">Existing Content:</Typography>
-          <FroalaEditorView model={existingContent} />
+          <Typography variant="body1">{existingContent}</Typography>
         </div>
       </div>
       <div className={styles.previewContainer}>
         <Typography variant="h6">Preview:</Typography>
-        <FroalaEditorView model={translateContent} />
+        <Typography variant="body1">{translateContent}</Typography>
       </div>
       <div className={styles.actions}>
         <button

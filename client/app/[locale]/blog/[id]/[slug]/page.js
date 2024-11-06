@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
 import styles from "./BlogPost.module.css";
 import { getBlogPostByPostId } from "@/lib/actions/blogPost/actions";
 import { notFound } from "next/navigation";
