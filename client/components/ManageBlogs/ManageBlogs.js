@@ -130,7 +130,7 @@ export default function ManageBlogs({ heading }) {
       setBackdropOpen(true);
       try {
         await deleteBlogPost(postToDelete.post_id);
-        await deleteFolder(authorId, postToDelete.post_id);
+        await deleteFolder(postToDelete.author_id, postToDelete.post_id);
         setSnackbarSeverity("success");
         setSnackbarMessage("Post deleted successfully");
         setRefresh(!refresh);
