@@ -18,6 +18,7 @@ export const dynamicParams = true;
 export async function generateMetadata({ params }) {
   const { id } = params;
   const post = await getBlogPostByPostId(id);
+  console.log(post);
 
   // If post is not found, return 404 metadata
   if (!post) {
