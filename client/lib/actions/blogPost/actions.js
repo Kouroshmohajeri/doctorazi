@@ -1,5 +1,4 @@
 import API from "@/app/api/server";
-import { notFound } from "next/navigation";
 
 export const getAllBlogPosts = async () => {
   try {
@@ -30,7 +29,7 @@ export const getBlogPostByPostId = async (postId) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching blog post by postId:", error);
-    return notFound();
+    return null;
   }
 };
 
