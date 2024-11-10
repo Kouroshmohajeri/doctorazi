@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import styles from "./BlogPost.module.css";
@@ -38,7 +37,6 @@ const BlogPostContent = async ({ params }) => {
   const post = await getBlogPostByPostId(id);
 
   if (!post) {
-    // Render a custom 404 message
     notFound();
   }
 
@@ -48,9 +46,7 @@ const BlogPostContent = async ({ params }) => {
 
   const translatorId = await getTranslatorById(post?.translatorId);
   const translatorData = await getFullNameById(translatorId?.userId);
-  let translatorFullname = translatorData
-    ? translatorData.fullName
-    : "Unknown Translator";
+  let translatorFullname = translatorData ? translatorData.fullName : "";
 
   const formattedDate = format(new Date(post.createdAt), "yyyy-MM-dd");
   const jalaliDate = jalaali.toJalaali(new Date(post.createdAt));
@@ -66,12 +62,11 @@ const BlogPostContent = async ({ params }) => {
           <div className={styles.banner}>
             {post.imageUrl && (
               <div className={styles.bannerImgWrapper}>
-                <Image
+                <img
                   className={styles.bannerImg}
                   src={`https://doctorazi.com/api/blogs/${post.author_id}/${post.post_id}/${post.imageUrl}`}
                   alt={post.altName}
-                  fill
-                  sizes="50vw"
+                  loading="lazy"
                 />
               </div>
             )}
@@ -86,8 +81,10 @@ const BlogPostContent = async ({ params }) => {
           </div>
         </div>
         <div className={styles.devider}>
-          <h2>Written By: {authorFullName}</h2>
-          <h2>Translated By: {translatorFullname}</h2>
+          <span>Written By: {authorFullName}</span>
+          {translatorFullname && (
+            <span>Translated By: {translatorFullname}</span>
+          )}
           {locale === "fa" ? (
             <h6>{formattedJalaliDate}</h6>
           ) : (

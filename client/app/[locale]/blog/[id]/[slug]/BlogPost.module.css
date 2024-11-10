@@ -1,111 +1,132 @@
-.container, .details{
-    display: flex;
-    flex-direction: column;
+/* General Blog Post Styling */
+/* Import Quill Styles */
+@import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';
+
+.container, .details {
+  display: flex;
+  flex-direction: column;
 }
-.container{
-    justify-content: space-between;
+
+.container {
+  justify-content: space-between;
 }
-.comments{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+
+.comments {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  gap: 0px;
 }
+
 .userComments {
-    height: 55vh;
-    overflow: scroll;
-}
-  
-.notFound{
-    margin: 25% auto;
-    text-align: center;
-    position: relative;
-    top: 10%;
-}
-.hr{
-    width: 50%;
-    margin: auto;
+  height: 55vh;
+  overflow: scroll;
 }
 
-.contentContainer{
-    width: 90%;
-    margin: 10% auto 0%;
+.notFound {
+  margin: 25% auto;
+  text-align: center;
+  position: relative;
+  top: 10%;
 }
-.content{
-    text-align: justify;
-}
-.devider{
-    background-color: white;
-    -webkit-box-shadow: 0px 0px 5px 2px rgba(148,148,148,0.52);
-    -moz-box-shadow: 0px 0px 5px 2px rgba(148,148,148,0.52);
-    box-shadow: 0px 0px 5px 2px rgba(148,148,148,0.52);
-    min-width: 15%;
-    max-width: fit-content;
-    border-radius: 15px;
-    padding: 1% 0;
-    text-align: center;
-    margin: 2% auto;
-}
-.header{
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-}
-.details, .banner{
-    width: 50%;
-    height: 95vh;
-    justify-content: center;
 
+.hr {
+  width: 50%;
+  margin: auto;
 }
-.bannerImg{
-    width: 100%;
+
+.contentContainer {
+  width: 90%;
+  margin: 10% auto 0%;
 }
+
+.content {
+  text-align: justify;
+}
+
+.devider {
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 5px 2px rgba(148, 148, 148, 0.52);
+  min-width: 15%;
+  max-width: fit-content;
+  border-radius: 15px;
+  padding: 1% 0;
+  text-align: center;
+  margin: 2% auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.devider span, .devider h6 {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Header Styling */
+.header {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.details, .banner {
+  width: 50%;
+  height: 95vh;
+  justify-content: center;
+}
+
+.bannerImg {
+  width: 100%;
+}
+
 .banner {
-    position: relative;
-    height: 95vh; /* Adjust this as needed */
-  }
-  
-  .bannerImgWrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .bannerImg {
-    object-fit: cover;
-  }
-  /* Responsive adjustments */
+  position: relative;
+  height: 95vh; /* Adjust this as needed */
+}
+
+.bannerImgWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.bannerImg {
+  object-fit: cover;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
-    .header {
-      flex-direction: column;
-    }
-    .details, .banner {
-      width: 100%; /* Full width on smaller screens */
-      height: auto;
-    }
-    .banner {
-      height: 60vh; /* Reduce height for medium screens */
-    }
-    .comments {
-      grid-template-columns: 1fr; /* Stack comments vertically */
-    }
+  .header {
+    flex-direction: column;
   }
-  
-  @media (max-width: 768px) {
-    .container {
-      padding: 0 10px;
-    }
-    .banner {
-      height: 50vh; /* Further reduce height for smaller screens */
-    }
+  .details, .banner {
+    width: 100%; /* Full width on smaller screens */
+    height: auto;
   }
-  
-  @media (max-width: 480px) {
-    .banner {
-      height: 40vh; /* Even smaller height for mobile screens */
-    }
-    .contentContainer {
-      margin: 5% auto;
-    }
+  .banner {
+    height: 60vh; /* Reduce height for medium screens */
   }
+  .comments {
+    grid-template-columns: 1fr; /* Stack comments vertically */
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+  .banner {
+    height: 50vh; /* Further reduce height for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    height: 40vh; /* Even smaller height for mobile screens */
+  }
+  .contentContainer {
+    margin: 5% auto;
+  }
+}
