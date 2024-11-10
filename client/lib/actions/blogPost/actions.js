@@ -1,6 +1,8 @@
 import API from "@/app/api/server";
+import { unstable_noStore as noStore } from "next/cache";
 
 export const getAllBlogPosts = async () => {
+  noStore();
   try {
     const response = await API.get("/blogPost/getAll");
     return response.data;
@@ -24,6 +26,7 @@ export const addTranslationToBlogPost = async (postId, translationData) => {
 };
 
 export const getBlogPostByPostId = async (postId) => {
+  noStore();
   try {
     const response = await API.get(`/blogPost/getByPostId/${postId}`);
     return response.data;
@@ -34,6 +37,7 @@ export const getBlogPostByPostId = async (postId) => {
 };
 
 export const deleteFolder = async (authorId, postId) => {
+  noStore();
   try {
     const response = await API.post("/blogPost/deleteFolder", {
       authorId,
@@ -47,6 +51,7 @@ export const deleteFolder = async (authorId, postId) => {
 };
 
 export const getBlogPostByAuthorId = async (authorId) => {
+  noStore();
   try {
     const response = await API.get(`/blogPost/author/${authorId}`);
     return response.data;
