@@ -127,7 +127,7 @@ const BlogPostContent = async ({ params }) => {
           </div>
         </div>
       ) : (
-        <h3 className={styles.notFound}>Post not found</h3>
+        <h3>Post not found</h3>
       )}
       <Footer />
     </main>
