@@ -117,6 +117,12 @@ export default function PostsManagement({ heading }) {
       try {
         await deleteBlogPost(postToDelete.post_id);
         await deleteFolder(authorId, postToDelete.post_id);
+        setPosts((prevPosts) =>
+          prevPosts.filter((post) => post.post_id !== postToDelete.post_id)
+        );
+        setFilteredPosts((prevPosts) =>
+          prevPosts.filter((post) => post.post_id !== postToDelete.post_id)
+        );
         setSnackbarSeverity("success");
         setSnackbarMessage("Post deleted successfully");
         setRefresh(!refresh);
