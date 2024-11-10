@@ -12,7 +12,7 @@ import TranslateModeProvider from "@/context/TranslateMode";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "My Doctor",
+  title: "Doctor Azi",
   description: "Designed By Kourosh Mohajeri - Web Gallery",
 };
 

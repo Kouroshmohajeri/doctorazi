@@ -3,7 +3,12 @@ import axios from "axios";
 const API = axios.create({
   baseURL: "https://doctorazi.com/api",
   withCredentials: true,
-  timeout: 10000, // 10 seconds timeout
+  timeout: 10000,
+  headers: {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    Pragma: "no-cache",
+    Expires: "0",
+  },
 });
 
 // Example of using an interceptor for response error handling
