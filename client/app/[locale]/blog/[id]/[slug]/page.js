@@ -13,15 +13,18 @@ import { getAuthorByAuthorId } from "@/lib/actions/authors/actions";
 import CommentSection from "@/components/CommentSection/CommentSection";
 import UserComments from "@/components/UserComments/UserComments";
 
-export const dynamicParams = true; // Enable dynamic params for this route
+export const dynamicParams = true;
 
-// Server-side function for metadata generation
 export async function generateMetadata({ params }) {
   const { id } = params;
   const post = await getBlogPostByPostId(id);
 
+  // If post is not found, return 404 metadata
   if (!post) {
-    return notFound(); // Returning a 404 if the post is not found
+    return {
+      title: "Post Not Found",
+      description: "The requested blog post could not be found.",
+    };
   }
 
   return {
@@ -34,8 +37,9 @@ const BlogPostContent = async ({ params }) => {
   const { id, locale } = params;
   const post = await getBlogPostByPostId(id);
 
+  // If post is not found, trigger a 404 error
   if (!post) {
-    notFound(); // Return 404 status if post is not found
+    notFound();
   }
 
   const author = await getAuthorByAuthorId(post.author_id);
