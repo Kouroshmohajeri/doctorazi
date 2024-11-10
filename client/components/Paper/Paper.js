@@ -2,28 +2,13 @@
 import React from "react";
 import styles from "./Paper.module.css";
 
-const Paper = ({
-  image,
-  title,
-  desc,
-  imageHeight = "30%",
-  imageWidth = "80%",
-}) => {
-  const parsedHeight = imageHeight;
-  const parsedWidth = imageWidth;
-
+const Paper = ({ image, title, desc }) => {
   return (
     <div className={styles.paperContainer}>
       <div className={styles.image}>
         <img
           src={`https://doctorazi.com/api/blogs/${image}`}
           alt={title}
-          style={{
-            width: parsedWidth,
-            height: parsedHeight,
-            objectFit: "cover",
-            borderRadius: "15px",
-          }}
           loading="lazy"
         />
       </div>
