@@ -40,7 +40,7 @@ const BlogPostContent = async ({ params }) => {
 
   // If post is not found, trigger a 404 error
   if (!post) {
-    notFound();
+    return notFound();
   }
 
   const author = await getAuthorByAuthorId(post.author_id);
