@@ -12,12 +12,11 @@ const Paper = ({
 }) => {
   const parsedHeight = parseInt(imageHeight.replace("%", ""));
   const parsedWidth = parseInt(imageWidth.replace("%", ""));
-  console.log(image);
   return (
     <div className={styles.paperContainer}>
       <div className={styles.image}>
         <Image
-          src={image}
+          src={`https://doctorazi.com/api/blogs/${image}`}
           alt={title}
           width={parsedWidth}
           height={parsedHeight}
