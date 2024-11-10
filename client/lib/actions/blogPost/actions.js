@@ -4,7 +4,9 @@ import { unstable_noStore as noStore } from "next/cache";
 export const getAllBlogPosts = async () => {
   noStore();
   try {
-    const response = await API.get("/blogPost/getAll");
+    const response = await API.get("/blogPost/getAll", {
+      headers: { "Cache-Control": "no-store" },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching blog posts:", error);

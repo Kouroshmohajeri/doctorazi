@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/legacy/image";
 import styles from "./Paper.module.css";
 
 const Paper = ({
@@ -10,21 +9,22 @@ const Paper = ({
   imageHeight = "30%",
   imageWidth = "80%",
 }) => {
-  const parsedHeight = parseInt(imageHeight.replace("%", ""));
-  const parsedWidth = parseInt(imageWidth.replace("%", ""));
-  console.log(image);
+  const parsedHeight = imageHeight;
+  const parsedWidth = imageWidth;
+
   return (
     <div className={styles.paperContainer}>
       <div className={styles.image}>
-        <Image
+        <img
           src={`https://doctorazi.com/api/blogs/${image}`}
           alt={title}
-          width={parsedWidth}
-          height={parsedHeight}
-          layout="responsive"
-          className="image"
-          priority
-          objectFit="cover"
+          style={{
+            width: parsedWidth,
+            height: parsedHeight,
+            objectFit: "cover",
+            borderRadius: "15px",
+          }}
+          loading="lazy"
         />
       </div>
       <div className={styles.details}>
@@ -34,4 +34,5 @@ const Paper = ({
     </div>
   );
 };
+
 export default Paper;
