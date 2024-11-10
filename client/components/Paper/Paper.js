@@ -1,18 +1,18 @@
-'use client';
-import React from 'react';
-import Image from 'next/legacy/image';
-import styles from './Paper.module.css';
+"use client";
+import React from "react";
+import Image from "next/legacy/image";
+import styles from "./Paper.module.css";
 
 const Paper = ({
   image,
   title,
   desc,
-  imageHeight = '30%',
-  imageWidth = '80%',
+  imageHeight = "30%",
+  imageWidth = "80%",
 }) => {
-  const parsedHeight = parseInt(imageHeight.replace('%', ''));
-  const parsedWidth = parseInt(imageWidth.replace('%', ''));
-
+  const parsedHeight = parseInt(imageHeight.replace("%", ""));
+  const parsedWidth = parseInt(imageWidth.replace("%", ""));
+  console.log(image);
   return (
     <div className={styles.paperContainer}>
       <div className={styles.image}>
