@@ -1,4 +1,5 @@
 import API from "@/app/api/server";
+import { notFound } from "next/navigation";
 
 export const getAllBlogPosts = async () => {
   try {
@@ -12,7 +13,10 @@ export const getAllBlogPosts = async () => {
 
 export const addTranslationToBlogPost = async (postId, translationData) => {
   try {
-    const response = await API.put(`/blogPost/addTranslation/${postId}`, translationData);
+    const response = await API.put(
+      `/blogPost/addTranslation/${postId}`,
+      translationData
+    );
     return response.data;
   } catch (error) {
     console.error("Error adding translation to blog post:", error);
@@ -26,16 +30,19 @@ export const getBlogPostByPostId = async (postId) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching blog post by postId:", error);
-    return null;
+    return notFound();
   }
 };
 
 export const deleteFolder = async (authorId, postId) => {
   try {
-    const response = await API.post('/blogPost/deleteFolder', { authorId, postId });
+    const response = await API.post("/blogPost/deleteFolder", {
+      authorId,
+      postId,
+    });
     return response.data;
   } catch (error) {
-    console.error('Error deleting folder:', error.message);
+    console.error("Error deleting folder:", error.message);
     throw error;
   }
 };
@@ -112,20 +119,30 @@ export const getNotTranslatedBlogPosts = async () => {
 
 export const getTranslatedBlogPostsByTranslatorId = async (translatorId) => {
   try {
-    const response = await API.get(`/blogPost/translatedByTranslatorId/${translatorId}`);
+    const response = await API.get(
+      `/blogPost/translatedByTranslatorId/${translatorId}`
+    );
     return response.data;
   } catch (error) {
-    console.error("Error fetching translated blog posts by translatorId:", error);
+    console.error(
+      "Error fetching translated blog posts by translatorId:",
+      error
+    );
     return [];
   }
 };
 
 export const getNotTranslatedBlogPostsByAuthorId = async (authorId) => {
   try {
-    const response = await API.get(`/blogPost/notTranslatedByAuthor/${authorId}`);
+    const response = await API.get(
+      `/blogPost/notTranslatedByAuthor/${authorId}`
+    );
     return response.data;
   } catch (error) {
-    console.error("Error fetching not translated blog posts by authorId:", error);
+    console.error(
+      "Error fetching not translated blog posts by authorId:",
+      error
+    );
     return [];
   }
 };
@@ -149,7 +166,6 @@ export const updateBlogPost = async (postId, newData) => {
     return null;
   }
 };
-
 
 export const getLastFourBlogPosts = async () => {
   try {
@@ -181,52 +197,59 @@ export const addBlogPost = async (postData) => {
   }
 };
 export const uploadImage = async (file, authorId, postId) => {
-    try {
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('authorId', authorId);
-        formData.append('postId', postId);
+  try {
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("authorId", authorId);
+    formData.append("postId", postId);
 
-        const response = await API.post("/blogPost/saveImage", formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+    const response = await API.post("/blogPost/saveImage", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
-        return response.data.imageUrl;
-    } catch (error) {
-        console.error('Error uploading image:', error.message);
-        throw error;
-    }
+    return response.data.imageUrl;
+  } catch (error) {
+    console.error("Error uploading image:", error.message);
+    throw error;
+  }
 };
 
 export const deleteImage = async (authorId, postId, imageName) => {
-    console.log(authorId, postId, imageName)
-    try {
-      const response = await API.post('/blogPost/deleteImage', { authorId, postId, imageName });
-      return response.data;
-    } catch (error) {
-      console.error('Error deleting image:', error.message);
-      throw error;
-    }
-  };
+  console.log(authorId, postId, imageName);
+  try {
+    const response = await API.post("/blogPost/deleteImage", {
+      authorId,
+      postId,
+      imageName,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting image:", error.message);
+    throw error;
+  }
+};
 
-  export const getNotRejectedBlogPosts = async () => {
-    try {
-      const response = await API.get("/blogPost/notRejected");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching not rejected blog posts:", error);
-      return [];
-    }
-  };
-  
-  export const updateRejectStatus = async (postId, isRejected, headId) => {
-    try {
-      const response = await API.put(`/blogPost/updateRejectStatus/${postId}`, { isRejected, headId });
-      return response.data;
-    } catch (error) {
-      console.error("Error updating reject status:", error);
-      return null;
-    }
-  };
+export const getNotRejectedBlogPosts = async () => {
+  try {
+    const response = await API.get("/blogPost/notRejected");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching not rejected blog posts:", error);
+    return [];
+  }
+};
+
+export const updateRejectStatus = async (postId, isRejected, headId) => {
+  try {
+    const response = await API.put(`/blogPost/updateRejectStatus/${postId}`, {
+      isRejected,
+      headId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating reject status:", error);
+    return null;
+  }
+};

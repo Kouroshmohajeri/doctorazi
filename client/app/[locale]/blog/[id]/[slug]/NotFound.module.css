@@ -1,0 +1,93 @@
+/* NotFound.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .errorCode {
+    font-size: 10rem; /* Large font for "404" on larger screens */
+    font-weight: bold;
+    margin: 0;
+    background: linear-gradient(45deg, #ff6b6b, #f5a623, #4a90e2, #50e3c2, #ff6b6b);
+    background-size: 300%; /* Makes the gradient larger to allow more movement */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Makes the text color transparent to show the gradient */
+    animation: gradientMove 5s infinite ease-in-out; /* Animation for gradient movement */
+  }
+  
+  .message {
+    font-size: 1.5rem;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 20px;
+  }
+  
+  .homeButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background-color: #0070f3;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .homeButton:hover {
+    background-color: #005bb5;
+  }
+  
+  /* Gradient animation */
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .errorCode {
+      font-size: 6rem;
+    }
+  
+    .message {
+      font-size: 1.2rem;
+    }
+  
+    .homeButton {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .errorCode {
+      font-size: 4rem;
+    }
+  
+    .message {
+      font-size: 1rem;
+    }
+  
+    .homeButton {
+      padding: 6px 14px;
+      font-size: 0.85rem;
+    }
+  }
+  
