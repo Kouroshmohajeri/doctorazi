@@ -12,6 +12,7 @@ const Paper = ({
 }) => {
   const parsedHeight = parseInt(imageHeight.replace("%", ""));
   const parsedWidth = parseInt(imageWidth.replace("%", ""));
+  console.log(image);
   return (
     <div className={styles.paperContainer}>
       <div className={styles.image}>

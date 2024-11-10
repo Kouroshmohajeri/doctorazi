@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
@@ -14,12 +15,13 @@ import UserComments from "@/components/UserComments/UserComments";
 
 export const dynamicParams = true; // Enable dynamic params for this route
 
+// Server-side function for metadata generation
 export async function generateMetadata({ params }) {
   const { id } = params;
   const post = await getBlogPostByPostId(id);
 
   if (!post) {
-    return notFound();
+    return notFound(); // Returning a 404 if the post is not found
   }
 
   return {
@@ -29,25 +31,23 @@ export async function generateMetadata({ params }) {
 }
 
 const BlogPostContent = async ({ params }) => {
-  const { id } = params;
-  const { locale } = params;
+  const { id, locale } = params;
   const post = await getBlogPostByPostId(id);
-  const author = await getAuthorByAuthorId(post?.author_id);
-  const authorData = await getFullNameById(author?.userId);
-  let authorFullName;
-  if (authorData) {
-    authorFullName = authorData.fullName;
-  }
-  const translatorId = await getTranslatorById(post?.translatorId);
-  const translatorData = await getFullNameById(translatorId?.userId);
-  let translatorFullname;
-  if (translatorData) {
-    translatorFullname = translatorData.fullName;
-  }
 
   if (!post) {
-    notFound();
+    notFound(); // Return 404 status if post is not found
   }
+
+  const author = await getAuthorByAuthorId(post.author_id);
+  const authorData = await getFullNameById(author?.userId);
+  let authorFullName = authorData ? authorData.fullName : "Unknown Author";
+
+  const translatorId = await getTranslatorById(post?.translatorId);
+  const translatorData = await getFullNameById(translatorId?.userId);
+  let translatorFullname = translatorData
+    ? translatorData.fullName
+    : "Unknown Translator";
+
   const formattedDate = format(new Date(post.createdAt), "yyyy-MM-dd");
   const jalaliDate = jalaali.toJalaali(new Date(post.createdAt));
   const formattedJalaliDate = `${jalaliDate.jy}-${jalaliDate.jm
@@ -70,7 +70,6 @@ const BlogPostContent = async ({ params }) => {
                     fill
                     sizes="50vw"
                   />
-                  {`${post.author_id}/${post.post_id}/${post.imageUrl}`}
                 </div>
               )}
             </div>
