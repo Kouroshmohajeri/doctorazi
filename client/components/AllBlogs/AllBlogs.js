@@ -10,6 +10,7 @@ const AllBlogs = () => {
   useEffect(() => {
     const fetchAllBlogs = async () => {
       const post = await getAllBlogPosts();
+      console.log(post);
       setBlogs(post);
     };
     fetchAllBlogs();
