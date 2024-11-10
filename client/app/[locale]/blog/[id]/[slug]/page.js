@@ -36,7 +36,7 @@ export async function generateMetadata({ params }) {
 const BlogPostContent = async ({ params }) => {
   const { id, locale } = params;
   const post = await getBlogPostByPostId(id);
-  console.log(post);
+  console.log("post is: ", post);
 
   // If post is not found, trigger a 404 error
   if (!post) {
