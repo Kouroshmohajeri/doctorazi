@@ -151,7 +151,6 @@ const BlogPostController = {
     const postId = req.params.postId;
     try {
       const deletedPost = await blogPostRepository.delete(postId);
-      console.log(deletedPost);
       res.json(deletedPost);
     } catch (error) {
       res.status(500).json({ error: error.message });
